@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AbysmalLightScoreTracker
 {
-    class CrucibleManager:PVPManager
+    class CrucibleManager : PVPManager
     {
         public Activity[] Activity_list;
 
         public CrucibleManager(RESTClient client, DateTime reset,
         DateTime limit, List<Member> Members, string ID, byte mode) :
-            base(client,reset,limit,Members,ID,mode)
+            base(client, reset, limit, Members, ID, mode)
         {
         }
 

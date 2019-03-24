@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AbysmalLightScoreTracker
 {
-    class GambitManager:PVEManager
+    class GambitManager : PVEManager
     {
         public Activity[] Activity_list;
 
         public GambitManager(RESTClient client, DateTime reset,
         DateTime limit, List<Member> Members, string ID, byte mode) :
-            base(client,reset,limit,Members,ID,mode)
+            base(client, reset, limit, Members, ID, mode)
         {
         }
 
@@ -113,7 +113,7 @@ namespace AbysmalLightScoreTracker
                         PGCoutPut += PGCRParse[0];
                     }
                     CheckIfSameMember(PGCoutPut, PGCRreader, i);
-                    if(Activity_list[i].Compwclanmembers == false)
+                    if (Activity_list[i].Compwclanmembers == false)
                     {
                         Activity_list[i].Compwclanmembers = CheckIfAnotherMember(PGCoutPut, Activity_list[i].Playercount);
                     }
@@ -183,7 +183,8 @@ namespace AbysmalLightScoreTracker
                         }
                     }
                 }
-            }GMBSTOP = false;
+            }
+            GMBSTOP = false;
 
             //JUMP TO KILLS KEYWORD
             while (!GMBSTOP)
@@ -209,8 +210,9 @@ namespace AbysmalLightScoreTracker
                         }
                     }
                 }
-            }GMBSTOP = false; 
-            
+            }
+            GMBSTOP = false;
+
             //JUMP TO VALUE KEYWORD
             while (!GMBSTOP)
             {
@@ -235,7 +237,8 @@ namespace AbysmalLightScoreTracker
                         }
                     }
                 }
-            }GMBSTOP = false;
+            }
+            GMBSTOP = false;
 
             //INVASION KILLS
             while (GMBRParse[0] != ',')

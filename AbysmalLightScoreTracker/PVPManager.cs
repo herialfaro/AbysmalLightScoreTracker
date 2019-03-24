@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbysmalLightScoreTracker
 {
-    class PVPManager:Manager
+    class PVPManager : Manager
     {
         public RESTClient rClient;
         public List<Member> Member_list;
@@ -180,716 +180,719 @@ namespace AbysmalLightScoreTracker
                     }
                     else if (ActualActiviyDT >= Date_limit)
                     {
-                        break;
                     }
-
-                    Match = new Activity();
-                    Match.Period = ActualActiviyDT.ToLocalTime();
-
-                    while (!STOP)
+                    else
                     {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'y')
+
+                        Match = new Activity();
+                        Match.Period = ActualActiviyDT.ToLocalTime();
+
+                        while (!STOP)
                         {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'H')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'y')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'a')
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'H')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 's')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'a')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 'h')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 's')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 'h')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false;
-                    localreader.Read(); localreader.Read();
+                        STOP = false;
+                        localreader.Read(); localreader.Read();
 
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    Match.directorActivityHash = outPut; outPut = string.Empty;
-
-                    while (charParse[0] != ':')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-                    localreader.Read(); charParse[0] = 'a';
-
-                    while (charParse[0] != '"')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == '"')
-                        {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    Match.InstanceID = outPut; outPut = string.Empty;
-
-                    ///////////////////////////////////////////////////////////////////////////////////
-                    //CHANGES BETWEEN ACTIVITIES
-                    ///////////////////////////////////////////////////////////////////////////////////
-
-                    //ASSISTS
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        Match.directorActivityHash = outPut; outPut = string.Empty;
+
+                        while (charParse[0] != ':')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+                        localreader.Read(); charParse[0] = 'a';
+
+                        while (charParse[0] != '"')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == '"')
+                            {
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        Match.InstanceID = outPut; outPut = string.Empty;
+
+                        ///////////////////////////////////////////////////////////////////////////////////
+                        //CHANGES BETWEEN ACTIVITIES
+                        ///////////////////////////////////////////////////////////////////////////////////
+
+                        //ASSISTS
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float assists;
-                    float.TryParse(outPut, out assists); outPut = string.Empty;
-                    Match.Assists = (ushort)assists;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //SCORE
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float assists;
+                        float.TryParse(outPut, out assists); outPut = string.Empty;
+                        Match.Assists = (ushort)assists;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //SCORE
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float score;
-                    float.TryParse(outPut, out score); outPut = string.Empty;
-                    Match.Score = (ushort)score;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //KILLS
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float score;
+                        float.TryParse(outPut, out score); outPut = string.Empty;
+                        Match.Score = (ushort)score;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //KILLS
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float kills;
-                    float.TryParse(outPut, out kills); outPut = string.Empty;
-                    Match.Kills = (ushort)kills;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //JUMPS TO DEATHS
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'e')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'a')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 't')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float kills;
+                        float.TryParse(outPut, out kills); outPut = string.Empty;
+                        Match.Kills = (ushort)kills;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //JUMPS TO DEATHS
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'e')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'a')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'h')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 't')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 's')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'h')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 's')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false;
-                    //////////////////////////////////////////////////////////////////
+                        STOP = false;
+                        //////////////////////////////////////////////////////////////////
 
-                    //DEATHS
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
+                        //DEATHS
+                        while (!STOP)
                         {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float deaths;
-                    float.TryParse(outPut, out deaths); outPut = string.Empty;
-                    Match.Deaths = (ushort)deaths;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //JUMPS TO COMPLETE
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'l')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'e')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 't')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float deaths;
+                        float.TryParse(outPut, out deaths); outPut = string.Empty;
+                        Match.Deaths = (ushort)deaths;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //JUMPS TO COMPLETE
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'l')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'e')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 't')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 'd')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 'd')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false;
-                    //////////////////////////////////////////////////////////////////
+                        STOP = false;
+                        //////////////////////////////////////////////////////////////////
 
-                    //COMPLETE
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
+                        //COMPLETE
+                        while (!STOP)
                         {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float mission_complete;
-                    float.TryParse(outPut, out mission_complete); outPut = string.Empty;
-                    if (mission_complete == 1) { Match.Completed = true; }
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //JUMPS TO KD
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'R')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'a')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 't')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float mission_complete;
+                        float.TryParse(outPut, out mission_complete); outPut = string.Empty;
+                        if (mission_complete == 1) { Match.Completed = true; }
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //JUMPS TO KD
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'R')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'a')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'i')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 't')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 'o')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'i')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 'o')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false;
-                    //////////////////////////////////////////////////////////////////
+                        STOP = false;
+                        //////////////////////////////////////////////////////////////////
 
-                    //KD
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
+                        //KD
+                        while (!STOP)
                         {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float KD;
-                    float.TryParse(outPut, out KD); outPut = string.Empty;
-                    Match.KD = (float)Math.Round(KD, 2);
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //KDA
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float KD;
+                        float.TryParse(outPut, out KD); outPut = string.Empty;
+                        Match.KD = (float)Math.Round(KD, 2);
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //KDA
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float KDA;
-                    float.TryParse(outPut, out KDA); outPut = string.Empty;
-                    Match.KDA = (float)Math.Round(KDA, 2);
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //DURATION
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'V')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'a')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'l')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float KDA;
+                        float.TryParse(outPut, out KDA); outPut = string.Empty;
+                        Match.KDA = (float)Math.Round(KDA, 2);
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //DURATION
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'V')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'a')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'u')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'l')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 'e')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'u')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 'e')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read(); localreader.Read();
-                    while (charParse[0] != '}')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == '}')
+                        STOP = false; localreader.Read(); localreader.Read();
+                        while (charParse[0] != '}')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    Match.Duration = outPut; outPut = string.Empty;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //STANDING
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'V')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'a')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == '}')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'l')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        Match.Duration = outPut; outPut = string.Empty;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //STANDING
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'V')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'a')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'u')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'l')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 'e')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'u')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 'e')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read(); localreader.Read(); localreader.Read();
-                    while (charParse[0] != '"')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == '"')
+                        STOP = false; localreader.Read(); localreader.Read(); localreader.Read();
+                        while (charParse[0] != '"')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    Match.Standing = outPut; outPut = string.Empty;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //TEAM
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == '"')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        Match.Standing = outPut; outPut = string.Empty;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //TEAM
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float team;
-                    float.TryParse(outPut, out team); outPut = string.Empty;
-                    if(team == 17) { outPut = "Bravo"; }
-                    else if (team == 18) { outPut = "Alpha"; }
-                    else { outPut = " "; }
-                    Match.Team = outPut; outPut = string.Empty;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //JUMPS TO PLAYERCOUNT
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'C')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'o')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float team;
+                        float.TryParse(outPut, out team); outPut = string.Empty;
+                        if (team == 17) { outPut = "Bravo"; }
+                        else if (team == 18) { outPut = "Alpha"; }
+                        else { outPut = " "; }
+                        Match.Team = outPut; outPut = string.Empty;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //JUMPS TO PLAYERCOUNT
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'C')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'o')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'n')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == 't')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'n')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == 't')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false;
-                    //////////////////////////////////////////////////////////////////
+                        STOP = false;
+                        //////////////////////////////////////////////////////////////////
 
-                    //PLAYERCOUNT
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
+                        //PLAYERCOUNT
+                        while (!STOP)
                         {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
-                        }
-                        outPut += charParse[0];
-                    }
-                    float playercount;
-                    float.TryParse(outPut, out playercount); outPut = string.Empty;
-                    Match.Playercount = (byte)playercount;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
-
-                    //TEAMSCORE
-                    while (!STOP)
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == 'a')
-                        {
-                            charParse[1] = (char)localreader.Read();
-                            if (charParse[1] == 'l')
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
                             {
-                                charParse[2] = (char)localreader.Read();
-                                if (charParse[2] == 'u')
+                                break;
+                            }
+                            outPut += charParse[0];
+                        }
+                        float playercount;
+                        float.TryParse(outPut, out playercount); outPut = string.Empty;
+                        Match.Playercount = (byte)playercount;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
+
+                        //TEAMSCORE
+                        while (!STOP)
+                        {
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == 'a')
+                            {
+                                charParse[1] = (char)localreader.Read();
+                                if (charParse[1] == 'l')
                                 {
-                                    charParse[3] = (char)localreader.Read();
-                                    if (charParse[3] == 'e')
+                                    charParse[2] = (char)localreader.Read();
+                                    if (charParse[2] == 'u')
                                     {
-                                        charParse[4] = (char)localreader.Read();
-                                        if (charParse[4] == '"')
+                                        charParse[3] = (char)localreader.Read();
+                                        if (charParse[3] == 'e')
                                         {
-                                            STOP = true;
+                                            charParse[4] = (char)localreader.Read();
+                                            if (charParse[4] == '"')
+                                            {
+                                                STOP = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    STOP = false; localreader.Read();
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                        if (charParse[0] == ',')
+                        STOP = false; localreader.Read();
+                        while (charParse[0] != ',')
                         {
-                            break;
+                            charParse[0] = (char)localreader.Read();
+                            if (charParse[0] == ',')
+                            {
+                                break;
+                            }
+                            outPut += charParse[0];
                         }
-                        outPut += charParse[0];
-                    }
-                    float teamscore;
-                    float.TryParse(outPut, out teamscore); outPut = string.Empty;
-                    Match.Teamscore = (ushort)teamscore;
-                    charParse[0] = 'a';
-                    while (charParse[0] != ',')
-                    {
-                        charParse[0] = (char)localreader.Read();
-                    }
+                        float teamscore;
+                        float.TryParse(outPut, out teamscore); outPut = string.Empty;
+                        Match.Teamscore = (ushort)teamscore;
+                        charParse[0] = 'a';
+                        while (charParse[0] != ',')
+                        {
+                            charParse[0] = (char)localreader.Read();
+                        }
 
-                    ///////////////////////////////////////////////////////////////////////////////////
-                    //READ ACTIVITY END
-                    ///////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////////////////////////////////////////////////////////
+                        //READ ACTIVITY END
+                        ///////////////////////////////////////////////////////////////////////////////////
 
-                    GetActivityDefinition();
-                    tempList.Add(Match);
+                        GetActivityDefinition();
+                        tempList.Add(Match);
+
+                    }
                 }
                 //PAGE END
                 if (outofDate == false)

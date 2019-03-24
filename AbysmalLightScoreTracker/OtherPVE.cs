@@ -13,7 +13,7 @@ namespace AbysmalLightScoreTracker
 
         public OtherPVE(RESTClient client, DateTime reset,
         DateTime limit, List<Member> Members, string ID, byte mode) :
-            base(client,reset,limit,Members,ID,mode)
+            base(client, reset, limit, Members, ID, mode)
         {
         }
 
@@ -112,7 +112,7 @@ namespace AbysmalLightScoreTracker
                         PGCoutPut += PGCRParse[0];
                     }
                     Activity_list[i].Compwclanmembers = CompareMembers(PGCoutPut, Activity_list[i].Playercount);
-                    if(Activity_list[i].Compwclanmembers)
+                    if (Activity_list[i].Compwclanmembers)
                     {
                         break;
                     }

@@ -24,7 +24,7 @@ namespace SheetsQuickstart
         static string ApplicationName = "Google Sheets API .NET Quickstart";
 
         IList<IList<Object>> values;
-        uint StoryPoints = 0, StrikePoints = 0, 
+        uint StoryPoints = 0, StrikePoints = 0,
              NightfallPoints = 0, RaidPoints = 0, CruciblePoints = 0, GambitPoints = 0;
         uint TotalPoints = 0;
 
@@ -103,45 +103,66 @@ namespace SheetsQuickstart
                    CrucibleMatches = 0, GambitMatches = 0, Raids = 0;
 
             Activity[][] Stories = actual_member.GetStoryMissions;
-            for(int i = 0; i < Stories.Count(); i++)
+            for (int i = 0; i < Stories.Count(); i++)
             {
-                if(Stories[i] != null)
-                StoryMissions += (ushort)Stories[i].Count();
+                if (Stories[i] != null)
+                    StoryMissions += (ushort)Stories[i].Count();
+            }
+
+            Stories = actual_member.GetForgeMissions;
+            for (int i = 0; i < Stories.Count(); i++)
+            {
+                if (Stories[i] != null)
+                    StoryMissions += (ushort)Stories[i].Count();
+            }
+
+            Stories = actual_member.GetReckoningMissions;
+            for (int i = 0; i < Stories.Count(); i++)
+            {
+                if (Stories[i] != null)
+                    StoryMissions += (ushort)Stories[i].Count();
             }
 
             Activity[][] Strikes = actual_member.GetStrikeMissions;
             for (int i = 0; i < Strikes.Count(); i++)
             {
                 if (Strikes[i] != null)
-                StrikeMissions += (ushort)Strikes[i].Count();
+                    StrikeMissions += (ushort)Strikes[i].Count();
             }
 
             Activity[][] Nightfalls = actual_member.GetNightfallMissions;
             for (int i = 0; i < Nightfalls.Count(); i++)
             {
                 if (Nightfalls[i] != null)
-                NightfallMissions += (ushort)Nightfalls[i].Count();
+                    NightfallMissions += (ushort)Nightfalls[i].Count();
             }
 
             Activity[][] Crucible = actual_member.GetCrucibleMatches;
             for (int i = 0; i < Crucible.Count(); i++)
             {
                 if (Crucible[i] != null)
-                CrucibleMatches += (ushort)Crucible[i].Count();
+                    CrucibleMatches += (ushort)Crucible[i].Count();
             }
 
             Activity[][] Gambit = actual_member.GetGambitMatches;
             for (int i = 0; i < Gambit.Count(); i++)
             {
                 if (Gambit[i] != null)
-                GambitMatches += (ushort)Gambit[i].Count();
+                    GambitMatches += (ushort)Gambit[i].Count();
+            }
+
+            Gambit = actual_member.GetGambitPrimeMatches;
+            for (int i = 0; i < Gambit.Count(); i++)
+            {
+                if (Gambit[i] != null)
+                    GambitMatches += (ushort)Gambit[i].Count();
             }
 
             Activity[][] Raid = actual_member.GetRaids;
             for (int i = 0; i < Raid.Count(); i++)
             {
                 if (Raid[i] != null)
-                Raids += (ushort)Raid[i].Count();
+                    Raids += (ushort)Raid[i].Count();
             }
 
             return (ushort)(StoryMissions + StrikeMissions + NightfallMissions + CrucibleMatches + GambitMatches + Raids);
@@ -152,12 +173,12 @@ namespace SheetsQuickstart
             ushort ActivityLevel = 0;
             foreach (IList<object> element in values)
             {
-                if(element[0].ToString() == "Actividades(NOPUNTOS)")
+                if (element[0].ToString() == "Actividades(NOPUNTOS)")
                 {
                     ushort MaxActivities = 0;
                     ushort.TryParse(element[1].ToString(), out MaxActivities);
                     ActivityLevel = (ushort)(10 * GetNumofActivities() / MaxActivities);
-                    if(ActivityLevel >= 10)
+                    if (ActivityLevel >= 10)
                     {
                         ActivityLevel = 10;
                     }
@@ -170,7 +191,7 @@ namespace SheetsQuickstart
         {
             ushort Level = GetActivityLevel();
             byte Color; //red
-            if(Level >= 6)
+            if (Level >= 6)
             {
                 Color = 1; //green
             }
@@ -203,6 +224,10 @@ namespace SheetsQuickstart
         {
             Activity[][] Stories = actual_member.GetStoryMissions;
             uint PointsperMission = 0;
+            uint ReckoningTierI = 0;
+            uint ReckoningTierII = 0;
+            uint ReckoningTierIII = 0;
+            uint ShatteredThronePoints = 0;
             uint Points = 0;
 
             foreach (IList<object> element in values)
@@ -211,18 +236,80 @@ namespace SheetsQuickstart
                 {
                     uint.TryParse(element[1].ToString(), out PointsperMission);
                 }
+                else if (element[0].ToString() == "Shattered Throne")
+                {
+                    uint.TryParse(element[1].ToString(), out ShatteredThronePoints);
+                }
+                else if (element[0].ToString() == "Reckoning tier 1")
+                {
+                    uint.TryParse(element[1].ToString(), out ReckoningTierI);
+                }
+                else if (element[0].ToString() == "Reckoning tier 2")
+                {
+                    uint.TryParse(element[1].ToString(), out ReckoningTierII);
+                }
+                else if (element[0].ToString() == "Reckoning tier 3")
+                {
+                    uint.TryParse(element[1].ToString(), out ReckoningTierIII);
+                }
             }
 
-            for(int i = 0; i < Stories.Count(); ++i)
+            for (int i = 0; i < Stories.Count(); ++i)
             {
                 if (Stories[i] != null)
-                for (int j = 0; j < Stories[i].Count(); ++j)
-                {
-                    if (Stories[i][j].Completed && Stories[i][j].Compwclanmembers)
+                    for (int j = 0; j < Stories[i].Count(); ++j)
                     {
-                        Points += PointsperMission;
+                        if (Stories[i][j].Completed && Stories[i][j].Compwclanmembers)
+                        {
+                            if (Stories[i][j].ActivityDefinition == "The Shattered Throne")
+                            {
+                                Points += ShatteredThronePoints;
+                            }
+                            else
+                            {
+                                Points += PointsperMission;
+                            }
+                        }
                     }
-                }
+            }
+
+            Stories = actual_member.GetForgeMissions;
+
+            for (int i = 0; i < Stories.Count(); ++i)
+            {
+                if (Stories[i] != null)
+                    for (int j = 0; j < Stories[i].Count(); ++j)
+                    {
+                        if (Stories[i][j].Completed && Stories[i][j].Compwclanmembers)
+                        {
+                            Points += PointsperMission;
+                        }
+                    }
+            }
+
+            Stories = actual_member.GetReckoningMissions;
+
+            for (int i = 0; i < Stories.Count(); ++i)
+            {
+                if (Stories[i] != null)
+                    for (int j = 0; j < Stories[i].Count(); ++j)
+                    {
+                        if (Stories[i][j].Compwclanmembers)
+                        {
+                            if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier I")
+                            {
+                                Points += ReckoningTierI;
+                            }
+                            else if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier II")
+                            {
+                                Points += ReckoningTierII;
+                            }
+                            else if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier III")
+                            {
+                                Points += ReckoningTierIII;
+                            }
+                        }
+                    }
             }
             return Points;
         }
@@ -244,13 +331,13 @@ namespace SheetsQuickstart
             for (int i = 0; i < Strikes.Count(); ++i)
             {
                 if (Strikes[i] != null)
-                for (int j = 0; j < Strikes[i].Count(); ++j)
-                {
-                    if (Strikes[i][j].Completed && Strikes[i][j].Compwclanmembers)
+                    for (int j = 0; j < Strikes[i].Count(); ++j)
                     {
-                        Points += PointsperMission;
+                        if (Strikes[i][j].Completed && Strikes[i][j].Compwclanmembers)
+                        {
+                            Points += PointsperMission;
+                        }
                     }
-                }
             }
             return Points;
         }
@@ -272,13 +359,13 @@ namespace SheetsQuickstart
             for (int i = 0; i < Nightfalls.Count(); ++i)
             {
                 if (Nightfalls[i] != null)
-                for (int j = 0; j < Nightfalls[i].Count(); ++j)
-                {
-                    if (Nightfalls[i][j].Completed && Nightfalls[i][j].Compwclanmembers)
+                    for (int j = 0; j < Nightfalls[i].Count(); ++j)
                     {
-                        Points += PointsperMission;
+                        if (Nightfalls[i][j].Completed && Nightfalls[i][j].Compwclanmembers)
+                        {
+                            Points += PointsperMission;
+                        }
                     }
-                }
             }
             return Points;
         }
@@ -317,32 +404,32 @@ namespace SheetsQuickstart
             for (int i = 0; i < Raids.Count(); ++i)
             {
                 if (Raids[i] != null)
-                for (int j = 0; j < Raids[i].Count(); ++j)
-                {
-                    if (Raids[i][j].Completed && Raids[i][j].Compwclanmembers)
+                    for (int j = 0; j < Raids[i].Count(); ++j)
                     {
-                        if(Raids[i][j].ActivityDefinition == "Leviathan: Normal" ||
-                           Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Normal" ||
-                           Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Normal")
+                        if (Raids[i][j].Completed && Raids[i][j].Compwclanmembers)
                         {
-                            Points += LeviathanRaidsNormal;
-                        }
-                        else if(Raids[i][j].ActivityDefinition == "Leviathan: Prestige" ||
-                           Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Prestige" ||
-                           Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Prestige")
-                        {
-                            Points += LeviathanRaidsPrestige;
-                        }
-                        else if(Raids[i][j].ActivityDefinition == "Last Wish: Level 55")
-                        {
-                            Points += LastWish;
-                        }
-                        else if (Raids[i][j].ActivityDefinition == "Scourge of the Past")
-                        {
-                            Points += ScourgeofthePast;
+                            if (Raids[i][j].ActivityDefinition == "Leviathan: Normal" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Normal" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Normal")
+                            {
+                                Points += LeviathanRaidsNormal;
+                            }
+                            else if (Raids[i][j].ActivityDefinition == "Leviathan: Prestige" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Prestige" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Prestige")
+                            {
+                                Points += LeviathanRaidsPrestige;
+                            }
+                            else if (Raids[i][j].ActivityDefinition == "Last Wish: Level 55")
+                            {
+                                Points += LastWish;
+                            }
+                            else if (Raids[i][j].ActivityDefinition == "Scourge of the Past")
+                            {
+                                Points += ScourgeofthePast;
+                            }
                         }
                     }
-                }
             }
             return Points;
         }
@@ -364,14 +451,21 @@ namespace SheetsQuickstart
             uint CrimsonLose = 0;
             uint BreakthroughWin = 0;
             uint BreakthroughLose = 0;
-
+            uint ShowdownWin = 0;
+            uint ShowdownLose = 0;
             uint PrivateWin = 0;
             uint PrivateLose = 0;
-            uint FortyplusDefeated = 0;
-            uint ThirtyplusDefeated = 0;
-            uint TwopointfiveKD = 0;
-            uint FiveKD = 0;
-            uint TenKD = 0;
+
+            uint FortyPlusNormal = 0;
+            uint FortyPlusSpecial = 0;
+            uint ThirtyPlusNormal = 0;
+            uint ThirtyPlusSpecial = 0;
+            uint TwopointfiveKDNormal = 0;
+            uint TwopointfiveKDSpecial = 0;
+            uint FiveKDNormal = 0;
+            uint FiveKDSpecial = 0;
+            uint TenKDNormal = 0;
+            uint TenKDSpecial = 0;
 
             uint Points = 0;
 
@@ -433,47 +527,75 @@ namespace SheetsQuickstart
                 {
                     uint.TryParse(element[1].ToString(), out BreakthroughLose);
                 }
+                else if (element[0].ToString() == "Victoria Showdown")
+                {
+                    uint.TryParse(element[1].ToString(), out ShowdownWin);
+                }
+                else if (element[0].ToString() == "Derrota Showdown")
+                {
+                    uint.TryParse(element[1].ToString(), out ShowdownLose);
+                }
                 else if (element[0].ToString() == "30+ derrotados")
                 {
-                    uint.TryParse(element[1].ToString(), out ThirtyplusDefeated);
+                    uint.TryParse(element[1].ToString(), out ThirtyPlusNormal);
                 }
                 else if (element[0].ToString() == "40+ derrotados")
                 {
-                    uint.TryParse(element[1].ToString(), out FortyplusDefeated);
+                    uint.TryParse(element[1].ToString(), out FortyPlusNormal);
+                }
+                else if (element[0].ToString() == "30+ derrotados especial")
+                {
+                    uint.TryParse(element[1].ToString(), out ThirtyPlusSpecial);
+                }
+                else if (element[0].ToString() == "40+ derrotados especial")
+                {
+                    uint.TryParse(element[1].ToString(), out FortyPlusSpecial);
                 }
                 else if (element[0].ToString() == "2.5 kd")
                 {
-                    uint.TryParse(element[1].ToString(), out TwopointfiveKD);
+                    uint.TryParse(element[1].ToString(), out TwopointfiveKDNormal);
                 }
                 else if (element[0].ToString() == "5 kd")
                 {
-                    uint.TryParse(element[1].ToString(), out FiveKD);
+                    uint.TryParse(element[1].ToString(), out FiveKDNormal);
                 }
                 else if (element[0].ToString() == "10 kd")
                 {
-                    uint.TryParse(element[1].ToString(), out TenKD);
+                    uint.TryParse(element[1].ToString(), out TenKDNormal);
+                }
+                else if (element[0].ToString() == "2.5 kd especial")
+                {
+                    uint.TryParse(element[1].ToString(), out TwopointfiveKDSpecial);
+                }
+                else if (element[0].ToString() == "5 kd especial")
+                {
+                    uint.TryParse(element[1].ToString(), out FiveKDSpecial);
+                }
+                else if (element[0].ToString() == "10 kd especial")
+                {
+                    uint.TryParse(element[1].ToString(), out TenKDSpecial);
                 }
             }
 
             for (int i = 0; i < Crucible.Count(); ++i)
             {
                 if (Crucible[i] != null)
-                for (int j = 0; j < Crucible[i].Count(); ++j)
-                {
-                    if (Crucible[i][j].Completed && Crucible[i][j].Compwclanmembers)
+                    for (int j = 0; j < Crucible[i].Count(); ++j)
                     {
-                        if (Crucible[i][j].ActivityDefinition == "Competitive")
+                        if (Crucible[i][j].Completed && Crucible[i][j].Compwclanmembers)
                         {
-                            if (Crucible[i][j].Standing == "Victory")
+                            if (Crucible[i][j].ActivityDefinition == "Competitive")
                             {
-                                Points += CompetitiveWin;
+                                if (Crucible[i][j].Standing == "Victory")
+                                {
+                                    Points += CompetitiveWin;
+                                }
+                                else if (Crucible[i][j].Standing == "Defeat")
+                                {
+                                    Points += CompetitiveLose;
+                                }
                             }
-                            else if (Crucible[i][j].Standing == "Defeat")
-                            {
-                                Points += CompetitiveLose;
-                            }
-                        }
-                        else if (Crucible[i][j].ActivityDefinition == "Iron Banner")
+                            else if (Crucible[i][j].ActivityDefinition == "Iron Banner")
                             {
                                 if (Crucible[i][j].Standing == "Victory")
                                 {
@@ -506,6 +628,17 @@ namespace SheetsQuickstart
                                     Points += BreakthroughLose;
                                 }
                             }
+                            else if (Crucible[i][j].ActivityDefinition == "Showdown")
+                            {
+                                if (Crucible[i][j].Standing == "Victory")
+                                {
+                                    Points += ShowdownWin;
+                                }
+                                else if (Crucible[i][j].Standing == "Defeat")
+                                {
+                                    Points += ShowdownLose;
+                                }
+                            }
                             else if (Crucible[i][j].ActivityDefinition == "Mayhem")
                             {
                                 if (Crucible[i][j].Standing == "Victory")
@@ -529,40 +662,70 @@ namespace SheetsQuickstart
                                 }
                             }
                             else
-                        {
-                            if (Crucible[i][j].Standing == "Victory")
                             {
-                                Points += OtherWin;
+                                if (Crucible[i][j].Standing == "Victory")
+                                {
+                                    Points += OtherWin;
+                                }
+                                else if (Crucible[i][j].Standing == "Defeat")
+                                {
+                                    Points += OtherLose;
+                                }
                             }
-                            else if (Crucible[i][j].Standing == "Defeat")
+
+                            if (Crucible[i][j].Kills >= 30 && Crucible[i][j].Kills < 40)
                             {
-                                Points += OtherLose;
+                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                { Points += ThirtyPlusSpecial; }
+                                else
+                                {
+                                    Points += ThirtyPlusNormal;
+                                }
                             }
-                        }
+                            else if (Crucible[i][j].Kills >= 40)
+                            {
+                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                { Points += FortyPlusSpecial; }
+                                else
+                                {
+                                    Points += FortyPlusNormal;
+                                }
+                            }
 
-                        if(Crucible[i][j].Kills >= 30 && Crucible[i][j].Kills < 40)
-                        {
-                            Points += ThirtyplusDefeated;
-                        }
-                        else if(Crucible[i][j].Kills >= 40)
-                        {
-                            Points += FortyplusDefeated;
-                        }
-
-                        if(Crucible[i][j].KD >= 2.5f && Crucible[i][j].KD < 5.0f)
-                        {
-                            Points += TwopointfiveKD;
-                        }
-                        else if(Crucible[i][j].KD >= 5.0f && Crucible[i][j].KD < 10.0f)
-                        {
-                            Points += FiveKD;
-                        }
-                        else if(Crucible[i][j].KD >= 10.0f)
-                        {
-                            Points += TenKD;
+                            if (Crucible[i][j].KD >= 2.5f && Crucible[i][j].KD < 5.0f)
+                            {
+                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                { Points += TwopointfiveKDSpecial; }
+                                else
+                                {
+                                    Points += TwopointfiveKDNormal;
+                                }
+                            }
+                            else if (Crucible[i][j].KD >= 5.0f && Crucible[i][j].KD < 10.0f)
+                            {
+                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                { Points += FiveKDSpecial; }
+                                else
+                                {
+                                    Points += FiveKDNormal;
+                                }
+                            }
+                            else if (Crucible[i][j].KD >= 10.0f)
+                            {
+                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                { Points += TenKDSpecial; }
+                                else
+                                {
+                                    Points += TenKDNormal;
+                                }
+                            }
                         }
                     }
-                }
             }
             return Points;
         }
@@ -572,6 +735,7 @@ namespace SheetsQuickstart
             Activity[][] Gambit = actual_member.GetGambitMatches;
 
             uint RoundWon = 0;
+            uint RoundPrimeWon = 0;
             uint FiveGuardians = 0;
             uint EightGuardians = 0;
             uint FiftyMotes = 0;
@@ -584,6 +748,10 @@ namespace SheetsQuickstart
                 if (element[0].ToString() == "Ronda gambito")
                 {
                     uint.TryParse(element[1].ToString(), out RoundWon);
+                }
+                else if (element[0].ToString() == "Ronda gambito supremo")
+                {
+                    uint.TryParse(element[1].ToString(), out RoundPrimeWon);
                 }
                 else if (element[0].ToString() == "5 guardianes gambito")
                 {
@@ -605,33 +773,66 @@ namespace SheetsQuickstart
 
             for (int i = 0; i < Gambit.Count(); ++i)
             {
-                if(Gambit[i] != null)
-                for (int j = 0; j < Gambit[i].Count(); ++j)
-                {
-                    if (Gambit[i][j].Completed && Gambit[i][j].Compwclanmembers)
+                if (Gambit[i] != null)
+                    for (int j = 0; j < Gambit[i].Count(); ++j)
                     {
-                        Points += RoundWon * Gambit[i][j].Teamscore;
+                        if (Gambit[i][j].Completed && Gambit[i][j].Compwclanmembers)
+                        {
+                            Points += RoundWon * Gambit[i][j].Teamscore;
 
-                        if(Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
-                        {
-                            Points += FiveGuardians;
-                        }
-                        else if(Gambit[i][j].Gambit_guardiankills >= 8)
-                        {
-                            Points += EightGuardians;
-                        }
+                            if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                            {
+                                Points += FiveGuardians;
+                            }
+                            else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                            {
+                                Points += EightGuardians;
+                            }
 
-                        if(Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
-                        {
-                            Points += FiftyMotes;
-                        }
-                        else if(Gambit[i][j].Gambit_motesdeposited >= 70)
-                        {
-                            Points += SeventyMotes;
+                            if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                            {
+                                Points += FiftyMotes;
+                            }
+                            else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                            {
+                                Points += SeventyMotes;
+                            }
                         }
                     }
-                }
             }
+
+            Gambit = actual_member.GetGambitPrimeMatches;
+
+            for (int i = 0; i < Gambit.Count(); ++i)
+            {
+                if (Gambit[i] != null)
+                    for (int j = 0; j < Gambit[i].Count(); ++j)
+                    {
+                        if (Gambit[i][j].Completed && Gambit[i][j].Compwclanmembers)
+                        {
+                            Points += RoundPrimeWon * Gambit[i][j].Teamscore;
+
+                            if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                            {
+                                Points += FiveGuardians;
+                            }
+                            else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                            {
+                                Points += EightGuardians;
+                            }
+
+                            if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                            {
+                                Points += FiftyMotes;
+                            }
+                            else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                            {
+                                Points += SeventyMotes;
+                            }
+                        }
+                    }
+            }
+
             return Points;
         }
     }

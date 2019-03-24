@@ -15,17 +15,23 @@ namespace AbysmalLightScoreTracker
         List<string> characterIDs;
 
         Activity[][] StoryMissions = new Activity[3][];
+        Activity[][] ForgeMissions = new Activity[3][];
+        Activity[][] ReckoningMissions = new Activity[3][];
         Activity[][] StrikeMissions = new Activity[3][];
         Activity[][] NightfallMissions = new Activity[3][];
         Activity[][] CrucibleMatches = new Activity[3][];
         Activity[][] GambitMatches = new Activity[3][];
+        Activity[][] GambitPrimeMatches = new Activity[3][];
         Activity[][] Raids = new Activity[3][];
 
         public Activity[][] GetStoryMissions { get => StoryMissions; }
+        public Activity[][] GetForgeMissions { get => ForgeMissions; }
+        public Activity[][] GetReckoningMissions { get => ReckoningMissions; }
         public Activity[][] GetStrikeMissions { get => StrikeMissions; }
         public Activity[][] GetNightfallMissions { get => NightfallMissions; }
         public Activity[][] GetCrucibleMatches { get => CrucibleMatches; }
         public Activity[][] GetGambitMatches { get => GambitMatches; }
+        public Activity[][] GetGambitPrimeMatches { get => GambitPrimeMatches; }
         public Activity[][] GetRaids { get => Raids; }
 
         public List<string> GetcharacterIDs()
