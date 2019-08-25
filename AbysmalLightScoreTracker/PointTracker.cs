@@ -165,6 +165,13 @@ namespace SheetsQuickstart
                     Raids += (ushort)Raid[i].Count();
             }
 
+            Raid = actual_member.GetMenagerieMissions;
+            for (int i = 0; i < Raid.Count(); i++)
+            {
+                if (Raid[i] != null)
+                    Raids += (ushort)Raid[i].Count();
+            }
+
             return (ushort)(StoryMissions + StrikeMissions + NightfallMissions + CrucibleMatches + GambitMatches + Raids);
         }
 
@@ -259,15 +266,29 @@ namespace SheetsQuickstart
                 if (Stories[i] != null)
                     for (int j = 0; j < Stories[i].Count(); ++j)
                     {
-                        if (Stories[i][j].Completed && Stories[i][j].Compwclanmembers)
+                        if (Stories[i][j].Completed)
                         {
-                            if (Stories[i][j].ActivityDefinition == "The Shattered Throne")
+                            if (Stories[i][j].Compwclanmembers)
                             {
-                                Points += ShatteredThronePoints;
+                                if (Stories[i][j].ActivityDefinition == "The Shattered Throne")
+                                {
+                                    Points += 3*ShatteredThronePoints;
+                                }
+                                else
+                                {
+                                    Points += 3*PointsperMission;
+                                }
                             }
                             else
                             {
-                                Points += PointsperMission;
+                                if (Stories[i][j].ActivityDefinition == "The Shattered Throne")
+                                {
+                                    Points += ShatteredThronePoints;
+                                }
+                                else
+                                {
+                                    Points += PointsperMission;
+                                }
                             }
                         }
                     }
@@ -280,9 +301,16 @@ namespace SheetsQuickstart
                 if (Stories[i] != null)
                     for (int j = 0; j < Stories[i].Count(); ++j)
                     {
-                        if (Stories[i][j].Completed && Stories[i][j].Compwclanmembers)
+                        if (Stories[i][j].Completed)
                         {
-                            Points += PointsperMission;
+                            if(Stories[i][j].Compwclanmembers)
+                            {
+                                Points += 3*PointsperMission;
+                            }
+                            else
+                            {
+                                Points += PointsperMission;
+                            }
                         }
                     }
             }
@@ -295,6 +323,21 @@ namespace SheetsQuickstart
                     for (int j = 0; j < Stories[i].Count(); ++j)
                     {
                         if (Stories[i][j].Compwclanmembers)
+                        {
+                            if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier I")
+                            {
+                                Points += 3*ReckoningTierI;
+                            }
+                            else if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier II")
+                            {
+                                Points += 3*ReckoningTierII;
+                            }
+                            else if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier III")
+                            {
+                                Points += 3*ReckoningTierIII;
+                            }
+                        }
+                        else
                         {
                             if (Stories[i][j].ActivityDefinition == "The Reckoning: Tier I")
                             {
@@ -333,9 +376,16 @@ namespace SheetsQuickstart
                 if (Strikes[i] != null)
                     for (int j = 0; j < Strikes[i].Count(); ++j)
                     {
-                        if (Strikes[i][j].Completed && Strikes[i][j].Compwclanmembers)
+                        if (Strikes[i][j].Completed)
                         {
-                            Points += PointsperMission;
+                            if(Strikes[i][j].Compwclanmembers)
+                            {
+                                Points += 3*PointsperMission;
+                            }
+                            else
+                            {
+                                Points += PointsperMission;
+                            }
                         }
                     }
             }
@@ -361,9 +411,16 @@ namespace SheetsQuickstart
                 if (Nightfalls[i] != null)
                     for (int j = 0; j < Nightfalls[i].Count(); ++j)
                     {
-                        if (Nightfalls[i][j].Completed && Nightfalls[i][j].Compwclanmembers)
+                        if (Nightfalls[i][j].Completed)
                         {
-                            Points += PointsperMission;
+                            if(Nightfalls[i][j].Compwclanmembers)
+                            {
+                                Points += 3*PointsperMission;
+                            }
+                            else
+                            {
+                                Points += PointsperMission;
+                            }
                         }
                     }
             }
@@ -378,6 +435,9 @@ namespace SheetsQuickstart
             uint LeviathanRaidsPrestige = 0;
             uint LastWish = 0;
             uint ScourgeofthePast = 0;
+            uint CrownofSorrow = 0;
+            uint MenagerieNormal = 0;
+            uint MenagerieHeroic = 0;
 
             uint Points = 0;
 
@@ -399,6 +459,18 @@ namespace SheetsQuickstart
                 {
                     uint.TryParse(element[1].ToString(), out ScourgeofthePast);
                 }
+                else if (element[0].ToString() == "Corona del Dolor")
+                {
+                    uint.TryParse(element[1].ToString(), out CrownofSorrow);
+                }
+                else if (element[0].ToString() == "Menagerie")
+                {
+                    uint.TryParse(element[1].ToString(), out MenagerieNormal);
+                }
+                else if (element[0].ToString() == "Menagerie Heroic")
+                {
+                    uint.TryParse(element[1].ToString(), out MenagerieHeroic);
+                }
             }
 
             for (int i = 0; i < Raids.Count(); ++i)
@@ -406,27 +478,96 @@ namespace SheetsQuickstart
                 if (Raids[i] != null)
                     for (int j = 0; j < Raids[i].Count(); ++j)
                     {
-                        if (Raids[i][j].Completed && Raids[i][j].Compwclanmembers)
+                        if (Raids[i][j].Completed)
                         {
-                            if (Raids[i][j].ActivityDefinition == "Leviathan: Normal" ||
+                            if(Raids[i][j].Compwclanmembers)
+                            {
+                                if (Raids[i][j].ActivityDefinition == "Leviathan: Normal" ||
                                Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Normal" ||
                                Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Normal")
-                            {
-                                Points += LeviathanRaidsNormal;
+                                {
+                                    Points += 3*LeviathanRaidsNormal;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Leviathan: Prestige" ||
+                                   Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Prestige" ||
+                                   Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Prestige")
+                                {
+                                    Points += 3*LeviathanRaidsPrestige;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Last Wish: Level 55")
+                                {
+                                    Points += 3*LastWish;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Scourge of the Past")
+                                {
+                                    Points += 3*ScourgeofthePast;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Crown of Sorrow: Normal")
+                                {
+                                    Points += 3*CrownofSorrow;
+                                }
                             }
-                            else if (Raids[i][j].ActivityDefinition == "Leviathan: Prestige" ||
-                               Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Prestige" ||
-                               Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Prestige")
+                            else
                             {
-                                Points += LeviathanRaidsPrestige;
+                                if (Raids[i][j].ActivityDefinition == "Leviathan: Normal" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Normal" ||
+                               Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Normal")
+                                {
+                                    Points += LeviathanRaidsNormal;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Leviathan: Prestige" ||
+                                   Raids[i][j].ActivityDefinition == "Leviathan, Eater of Worlds: Prestige" ||
+                                   Raids[i][j].ActivityDefinition == "Leviathan, Spire of Stars: Prestige")
+                                {
+                                    Points += LeviathanRaidsPrestige;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Last Wish: Level 55")
+                                {
+                                    Points += LastWish;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Scourge of the Past")
+                                {
+                                    Points += ScourgeofthePast;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Crown of Sorrow: Normal")
+                                {
+                                    Points += CrownofSorrow;
+                                }
                             }
-                            else if (Raids[i][j].ActivityDefinition == "Last Wish: Level 55")
+                        }
+                    }
+            }
+
+            Raids = actual_member.GetMenagerieMissions;
+
+            for (int i = 0; i < Raids.Count(); ++i)
+            {
+                if (Raids[i] != null)
+                    for (int j = 0; j < Raids[i].Count(); ++j)
+                    {
+                        if (Raids[i][j].Completed)
+                        {
+                            if (Raids[i][j].Compwclanmembers)
                             {
-                                Points += LastWish;
+                                if (Raids[i][j].ActivityDefinition == "The Menagerie")
+                                {
+                                    Points += 3 * MenagerieNormal;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "The Menagerie: The Menagerie (Heroic)")
+                                {
+                                    Points += 3 * MenagerieHeroic;
+                                }
                             }
-                            else if (Raids[i][j].ActivityDefinition == "Scourge of the Past")
+                            else
                             {
-                                Points += ScourgeofthePast;
+                                if (Raids[i][j].ActivityDefinition == "The Menagerie")
+                                {
+                                    Points += MenagerieNormal;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "The Menagerie: The Menagerie (Heroic)")
+                                {
+                                    Points += MenagerieHeroic;
+                                }
                             }
                         }
                     }
@@ -453,8 +594,6 @@ namespace SheetsQuickstart
             uint BreakthroughLose = 0;
             uint ShowdownWin = 0;
             uint ShowdownLose = 0;
-            uint PrivateWin = 0;
-            uint PrivateLose = 0;
 
             uint FortyPlusNormal = 0;
             uint FortyPlusSpecial = 0;
@@ -486,14 +625,6 @@ namespace SheetsQuickstart
                 else if (element[0].ToString() == "Derrota estandarte")
                 {
                     uint.TryParse(element[1].ToString(), out IronLose);
-                }
-                else if (element[0].ToString() == "Victoria privada")
-                {
-                    uint.TryParse(element[1].ToString(), out PrivateWin);
-                }
-                else if (element[0].ToString() == "Derrota privada")
-                {
-                    uint.TryParse(element[1].ToString(), out PrivateLose);
                 }
                 else if (element[0].ToString() == "Derrota competitivo")
                 {
@@ -582,146 +713,270 @@ namespace SheetsQuickstart
                 if (Crucible[i] != null)
                     for (int j = 0; j < Crucible[i].Count(); ++j)
                     {
-                        if (Crucible[i][j].Completed && Crucible[i][j].Compwclanmembers)
+                        if (Crucible[i][j].Completed)
                         {
-                            if (Crucible[i][j].ActivityDefinition == "Competitive")
+                            if(Crucible[i][j].Compwclanmembers)
                             {
-                                if (Crucible[i][j].Standing == "Victory")
+                                if (Crucible[i][j].ActivityDefinition == "Competitive")
                                 {
-                                    Points += CompetitiveWin;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*CompetitiveWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*CompetitiveLose;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+                                else if (Crucible[i][j].ActivityDefinition == "Iron Banner")
                                 {
-                                    Points += CompetitiveLose;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*IronWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*IronLose;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Iron Banner")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
+                                else if (Crucible[i][j].ActivityDefinition == "Crimson Days")
                                 {
-                                    Points += IronWin;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*CrimsonWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*CrimsonLose;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+                                else if (Crucible[i][j].ActivityDefinition == "Breakthrough")
                                 {
-                                    Points += IronLose;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*BreakthroughWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*BreakthroughLose;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Crimson Days")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
+                                else if (Crucible[i][j].ActivityDefinition == "Showdown")
                                 {
-                                    Points += CrimsonWin;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*ShowdownWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*ShowdownLose;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+                                else if (Crucible[i][j].ActivityDefinition == "Mayhem")
                                 {
-                                    Points += CrimsonLose;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*MayhemWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*MayhemLose;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Breakthrough")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
+                                else
                                 {
-                                    Points += BreakthroughWin;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*OtherWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*OtherLose;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+
+                                if (Crucible[i][j].Kills >= 30 && Crucible[i][j].Kills < 40)
                                 {
-                                    Points += BreakthroughLose;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += 3*ThirtyPlusSpecial; }
+                                    else
+                                    {
+                                        Points += 3*ThirtyPlusNormal;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Showdown")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
+                                else if (Crucible[i][j].Kills >= 40)
                                 {
-                                    Points += ShowdownWin;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += 3*FortyPlusSpecial; }
+                                    else
+                                    {
+                                        Points += 3*FortyPlusNormal;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+
+                                if (Crucible[i][j].KD >= 2.5f && Crucible[i][j].KD < 5.0f)
                                 {
-                                    Points += ShowdownLose;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += 3*TwopointfiveKDSpecial; }
+                                    else
+                                    {
+                                        Points += 3*TwopointfiveKDNormal;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Mayhem")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
+                                else if (Crucible[i][j].KD >= 5.0f && Crucible[i][j].KD < 10.0f)
                                 {
-                                    Points += MayhemWin;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += 3*FiveKDSpecial; }
+                                    else
+                                    {
+                                        Points += 3*FiveKDNormal;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+                                else if (Crucible[i][j].KD >= 10.0f)
                                 {
-                                    Points += MayhemLose;
-                                }
-                            }
-                            else if (Crucible[i][j].ActivityDefinition == "Private Match")
-                            {
-                                if (Crucible[i][j].Standing == "Victory")
-                                {
-                                    Points += PrivateWin;
-                                }
-                                else if (Crucible[i][j].Standing == "Defeat")
-                                {
-                                    Points += PrivateLose;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += 3*TenKDSpecial; }
+                                    else
+                                    {
+                                        Points += 3*TenKDNormal;
+                                    }
                                 }
                             }
                             else
                             {
-                                if (Crucible[i][j].Standing == "Victory")
+                                if (Crucible[i][j].ActivityDefinition == "Competitive")
                                 {
-                                    Points += OtherWin;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += CompetitiveWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += CompetitiveLose;
+                                    }
                                 }
-                                else if (Crucible[i][j].Standing == "Defeat")
+                                else if (Crucible[i][j].ActivityDefinition == "Iron Banner")
                                 {
-                                    Points += OtherLose;
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += IronWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += IronLose;
+                                    }
                                 }
-                            }
+                                else if (Crucible[i][j].ActivityDefinition == "Crimson Days")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += CrimsonWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += CrimsonLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Breakthrough")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += BreakthroughWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += BreakthroughLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Showdown")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += ShowdownWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += ShowdownLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Mayhem")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += MayhemWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += MayhemLose;
+                                    }
+                                }
+                                else
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += OtherWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += OtherLose;
+                                    }
+                                }
 
-                            if (Crucible[i][j].Kills >= 30 && Crucible[i][j].Kills < 40)
-                            {
-                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
-                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
-                                { Points += ThirtyPlusSpecial; }
-                                else
+                                if (Crucible[i][j].Kills >= 30 && Crucible[i][j].Kills < 40)
                                 {
-                                    Points += ThirtyPlusNormal;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += ThirtyPlusSpecial; }
+                                    else
+                                    {
+                                        Points += ThirtyPlusNormal;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].Kills >= 40)
-                            {
-                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
-                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
-                                { Points += FortyPlusSpecial; }
-                                else
+                                else if (Crucible[i][j].Kills >= 40)
                                 {
-                                    Points += FortyPlusNormal;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += FortyPlusSpecial; }
+                                    else
+                                    {
+                                        Points += FortyPlusNormal;
+                                    }
                                 }
-                            }
 
-                            if (Crucible[i][j].KD >= 2.5f && Crucible[i][j].KD < 5.0f)
-                            {
-                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
-                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
-                                { Points += TwopointfiveKDSpecial; }
-                                else
+                                if (Crucible[i][j].KD >= 2.5f && Crucible[i][j].KD < 5.0f)
                                 {
-                                    Points += TwopointfiveKDNormal;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += TwopointfiveKDSpecial; }
+                                    else
+                                    {
+                                        Points += TwopointfiveKDNormal;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].KD >= 5.0f && Crucible[i][j].KD < 10.0f)
-                            {
-                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
-                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
-                                { Points += FiveKDSpecial; }
-                                else
+                                else if (Crucible[i][j].KD >= 5.0f && Crucible[i][j].KD < 10.0f)
                                 {
-                                    Points += FiveKDNormal;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += FiveKDSpecial; }
+                                    else
+                                    {
+                                        Points += FiveKDNormal;
+                                    }
                                 }
-                            }
-                            else if (Crucible[i][j].KD >= 10.0f)
-                            {
-                                if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
-                                    Crucible[i][j].ActivityDefinition == "Iron Banner")
-                                { Points += TenKDSpecial; }
-                                else
+                                else if (Crucible[i][j].KD >= 10.0f)
                                 {
-                                    Points += TenKDNormal;
+                                    if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                        Crucible[i][j].ActivityDefinition == "Iron Banner")
+                                    { Points += TenKDSpecial; }
+                                    else
+                                    {
+                                        Points += TenKDNormal;
+                                    }
                                 }
                             }
                         }
@@ -776,26 +1031,51 @@ namespace SheetsQuickstart
                 if (Gambit[i] != null)
                     for (int j = 0; j < Gambit[i].Count(); ++j)
                     {
-                        if (Gambit[i][j].Completed && Gambit[i][j].Compwclanmembers)
+                        if (Gambit[i][j].Completed)
                         {
-                            Points += RoundWon * Gambit[i][j].Teamscore;
+                            if(Gambit[i][j].Compwclanmembers)
+                            {
+                                Points += 3*(RoundWon * Gambit[i][j].Teamscore);
 
-                            if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
-                            {
-                                Points += FiveGuardians;
-                            }
-                            else if (Gambit[i][j].Gambit_guardiankills >= 8)
-                            {
-                                Points += EightGuardians;
-                            }
+                                if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                                {
+                                    Points += 3*FiveGuardians;
+                                }
+                                else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                                {
+                                    Points += 3*EightGuardians;
+                                }
 
-                            if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
-                            {
-                                Points += FiftyMotes;
+                                if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                                {
+                                    Points += 3*FiftyMotes;
+                                }
+                                else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                                {
+                                    Points += 3*SeventyMotes;
+                                }
                             }
-                            else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                            else
                             {
-                                Points += SeventyMotes;
+                                Points += RoundWon * Gambit[i][j].Teamscore;
+
+                                if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                                {
+                                    Points += FiveGuardians;
+                                }
+                                else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                                {
+                                    Points += EightGuardians;
+                                }
+
+                                if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                                {
+                                    Points += FiftyMotes;
+                                }
+                                else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                                {
+                                    Points += SeventyMotes;
+                                }
                             }
                         }
                     }
@@ -808,26 +1088,51 @@ namespace SheetsQuickstart
                 if (Gambit[i] != null)
                     for (int j = 0; j < Gambit[i].Count(); ++j)
                     {
-                        if (Gambit[i][j].Completed && Gambit[i][j].Compwclanmembers)
+                        if (Gambit[i][j].Completed)
                         {
-                            Points += RoundPrimeWon * Gambit[i][j].Teamscore;
+                            if(Gambit[i][j].Compwclanmembers)
+                            {
+                                Points += 3*(RoundPrimeWon * Gambit[i][j].Teamscore);
 
-                            if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
-                            {
-                                Points += FiveGuardians;
-                            }
-                            else if (Gambit[i][j].Gambit_guardiankills >= 8)
-                            {
-                                Points += EightGuardians;
-                            }
+                                if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                                {
+                                    Points += 3*FiveGuardians;
+                                }
+                                else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                                {
+                                    Points += 3*EightGuardians;
+                                }
 
-                            if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
-                            {
-                                Points += FiftyMotes;
+                                if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                                {
+                                    Points += 3*FiftyMotes;
+                                }
+                                else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                                {
+                                    Points += 3*SeventyMotes;
+                                }
                             }
-                            else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                            else
                             {
-                                Points += SeventyMotes;
+                                Points += RoundPrimeWon * Gambit[i][j].Teamscore;
+
+                                if (Gambit[i][j].Gambit_guardiankills >= 5 && Gambit[i][j].Gambit_guardiankills < 8)
+                                {
+                                    Points += FiveGuardians;
+                                }
+                                else if (Gambit[i][j].Gambit_guardiankills >= 8)
+                                {
+                                    Points += EightGuardians;
+                                }
+
+                                if (Gambit[i][j].Gambit_motesdeposited >= 50 && Gambit[i][j].Gambit_motesdeposited < 70)
+                                {
+                                    Points += FiftyMotes;
+                                }
+                                else if (Gambit[i][j].Gambit_motesdeposited >= 70)
+                                {
+                                    Points += SeventyMotes;
+                                }
                             }
                         }
                     }

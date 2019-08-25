@@ -25,6 +25,7 @@ namespace AbysmalLightScoreTracker
         OtherPVE new_strikemanager;
         OtherPVE new_nightfallmanager;
         RaidManager new_raidmanager;
+        RaidManager new_menageriemanager;
         CrucibleManager new_cruciblemanager;
         GambitManager new_gambitmanager;
         GambitManager new_gambitprimemanager;
@@ -127,7 +128,7 @@ namespace AbysmalLightScoreTracker
             }
             else
             {
-                Date_selected = DayOfWeek.Sunday;
+                Date_selected = DayOfWeek.Tuesday;
             }
         }
 
@@ -156,16 +157,6 @@ namespace AbysmalLightScoreTracker
 
             if (actual_member != null)
             {
-                if (actual_member.Type == "1")
-                {
-                    pictureBox1.Visible = false;
-                    pictureBox2.Visible = true;
-                }
-                else if (actual_member.Type == "4")
-                {
-                    pictureBox2.Visible = false;
-                    pictureBox1.Visible = true;
-                }
 
                 //STATES
 
@@ -664,6 +655,73 @@ namespace AbysmalLightScoreTracker
                             RaidView3.Items.Add(itm);
                         }
                     }
+
+                    new_menageriemanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
+
+                    i = 0;
+                    Activity[][] Menagerie = actual_member.GetMenagerieMissions;
+                    foreach (string element in IDs)
+                    {
+                        new_menageriemanager.ParseRaid(actual_member.ID, element, actual_member.Type);
+                        Menagerie[i] = new_menageriemanager.Activity_list;
+                        i++;
+                    }
+
+                    foreach (Activity element in Menagerie[0])
+                    {
+                        string[] arr = new string[8];
+                        //add items to ListView
+                        arr[0] = element.ActivityDefinition;
+                        arr[1] = element.Completed.ToString();
+                        arr[2] = element.Kills.ToString();
+                        arr[3] = element.Assists.ToString();
+                        arr[4] = element.Deaths.ToString();
+                        arr[5] = element.Duration;
+                        arr[6] = element.Compwclanmembers.ToString();
+                        arr[7] = element.Period.ToString();
+                        itm = new ListViewItem(arr);
+                        RaidView1.Items.Add(itm);
+                    }
+
+                    if (Menagerie[1] != null)
+                    {
+                        itm = new ListViewItem();
+                        foreach (Activity element in Menagerie[1])
+                        {
+                            string[] arr = new string[8];
+                            //add items to ListView
+                            arr[0] = element.ActivityDefinition;
+                            arr[1] = element.Completed.ToString();
+                            arr[2] = element.Kills.ToString();
+                            arr[3] = element.Assists.ToString();
+                            arr[4] = element.Deaths.ToString();
+                            arr[5] = element.Duration;
+                            arr[6] = element.Compwclanmembers.ToString();
+                            arr[7] = element.Period.ToString();
+                            itm = new ListViewItem(arr);
+                            RaidView2.Items.Add(itm);
+                        }
+                    }
+
+                    if (Menagerie[2] != null)
+                    {
+                        itm = new ListViewItem();
+                        foreach (Activity element in Menagerie[2])
+                        {
+                            string[] arr = new string[8];
+                            //add items to ListView
+                            arr[0] = element.ActivityDefinition;
+                            arr[1] = element.Completed.ToString();
+                            arr[2] = element.Kills.ToString();
+                            arr[3] = element.Assists.ToString();
+                            arr[4] = element.Deaths.ToString();
+                            arr[5] = element.Duration;
+                            arr[6] = element.Compwclanmembers.ToString();
+                            arr[7] = element.Period.ToString();
+                            itm = new ListViewItem(arr);
+                            RaidView3.Items.Add(itm);
+                        }
+                    }
                     strGlobal = Reset_time.ToShortDateString() + " - " + Date_limit.ToShortDateString();
                 }
                 else if (STATE == "Crisol")
@@ -955,6 +1013,7 @@ namespace AbysmalLightScoreTracker
                     Activity[][] StrikeMissions = actual_member.GetStrikeMissions;
                     Activity[][] NightfallMissions = actual_member.GetNightfallMissions;
                     Activity[][] Raids = actual_member.GetRaids;
+                    Activity[][] Menagerie = actual_member.GetMenagerieMissions;
                     Activity[][] CrucibleMatches = actual_member.GetCrucibleMatches;
                     Activity[][] GambitMatches = actual_member.GetGambitMatches;
                     Activity[][] GambitPrimeMatches = actual_member.GetGambitPrimeMatches;
@@ -985,7 +1044,7 @@ namespace AbysmalLightScoreTracker
                         i++;
                     }
 
-                    new_reckoningmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 66);
+                    new_reckoningmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 76);
                     i = 0;
                     foreach (string element in IDs)
                     {
@@ -1018,6 +1077,15 @@ namespace AbysmalLightScoreTracker
                     {
                         new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
                         Raids[i] = new_raidmanager.Activity_list;
+                        i++;
+                    }
+
+                    new_menageriemanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
+                    i = 0;
+                    foreach (string element in IDs)
+                    {
+                        new_menageriemanager.ParseRaid(actual_member.ID, element, actual_member.Type);
+                        Menagerie[i] = new_menageriemanager.Activity_list;
                         i++;
                     }
 
@@ -1093,11 +1161,10 @@ namespace AbysmalLightScoreTracker
         private void Select_clan_button_Click_1(object sender, EventArgs e)
         {
             clanID = Clan_options.Text;
-            if (clanID == "Abysmal Light Yin (XBOX)")
+            if (clanID == "Abysmal Light")
             {
                 clanID = "3398247";
                 Initial_Box.Visible = false;
-                pictureBox2.Visible = true;
                 new_clanmembermanager.ParseClanMembers(rClient, clanID);
                 foreach (Member element in new_clanmembermanager.ClanMembersList)
                 {
@@ -1114,18 +1181,6 @@ namespace AbysmalLightScoreTracker
                 //    }
                 //}
             }
-            else if (clanID == "Abysmal Light Yang (PC)")
-            {
-                clanID = "3504040";
-                Initial_Box.Visible = false;
-                pictureBox1.Visible = true;
-                new_clanmembermanager.ParseClanMembers(rClient, clanID);
-                foreach (Member element in new_clanmembermanager.ClanMembersList)
-                {
-                    select_User.Items.Add(element.Name);
-                }
-                Debug_box.Text = "Listo";
-            }
             else
             {
                 invalid_clan.Visible = true;
@@ -1139,10 +1194,7 @@ namespace AbysmalLightScoreTracker
 
         private void Reset()
         {
-            Debug_box.Text = "Cargando miembros...";
             Initial_Box.Visible = true;
-            pictureBox1.Visible = false;
-            pictureBox2.Visible = false;
             invalid_clan.Visible = false;
             General_box.Visible = false;
             Mission_Box.Visible = false;

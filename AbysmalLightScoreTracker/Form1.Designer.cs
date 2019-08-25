@@ -57,8 +57,6 @@
             this.Select_clan_button = new System.Windows.Forms.Button();
             this.Clan_options = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.select_User = new System.Windows.Forms.ComboBox();
@@ -268,8 +266,6 @@
             this.periodSelection = new System.Windows.Forms.ComboBox();
             this.General_box.SuspendLayout();
             this.Initial_Box.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Mission_Box.SuspendLayout();
             this.Strike_box.SuspendLayout();
             this.Raid_box.SuspendLayout();
@@ -359,7 +355,7 @@
             this.Initial_Box.Controls.Add(this.Select_clan_button);
             this.Initial_Box.Controls.Add(this.Clan_options);
             this.Initial_Box.Controls.Add(this.label4);
-            this.Initial_Box.Location = new System.Drawing.Point(16, 13);
+            this.Initial_Box.Location = new System.Drawing.Point(16, 19);
             this.Initial_Box.Name = "Initial_Box";
             this.Initial_Box.Size = new System.Drawing.Size(482, 490);
             this.Initial_Box.TabIndex = 14;
@@ -390,8 +386,7 @@
             // 
             this.Clan_options.FormattingEnabled = true;
             this.Clan_options.Items.AddRange(new object[] {
-            "Abysmal Light Yin (XBOX)",
-            "Abysmal Light Yang (PC)"});
+            "Abysmal Light"});
             this.Clan_options.Location = new System.Drawing.Point(100, 165);
             this.Clan_options.Name = "Clan_options";
             this.Clan_options.Size = new System.Drawing.Size(261, 21);
@@ -405,26 +400,6 @@
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 0;
             this.label4.Text = "Selecciona el clan:";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::AbysmalLightScoreTracker.Properties.Resources.xboxlive_rgb_stacked_2013;
-            this.pictureBox2.Location = new System.Drawing.Point(283, 35);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(100, 83);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 8;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::AbysmalLightScoreTracker.Properties.Resources.battle_net___icon_by_blagoicons_daew2bl;
-            this.pictureBox1.Location = new System.Drawing.Point(283, 35);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 83);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -1963,8 +1938,6 @@
             this.Controls.Add(this.select_User);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.General_box);
             this.Controls.Add(this.Debug_box);
             this.Controls.Add(this.modeSelection);
@@ -1980,8 +1953,6 @@
             this.General_box.PerformLayout();
             this.Initial_Box.ResumeLayout(false);
             this.Initial_Box.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Mission_Box.ResumeLayout(false);
             this.Strike_box.ResumeLayout(false);
             this.Raid_box.ResumeLayout(false);
@@ -2003,8 +1974,6 @@
         private System.Windows.Forms.TextBox charText2;
         private System.Windows.Forms.TextBox charText3;
         private System.Windows.Forms.TextBox charText1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox select_User;

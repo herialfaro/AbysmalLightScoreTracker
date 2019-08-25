@@ -133,6 +133,7 @@
   <ItemGroup>
     <Content Include="Resources\Cultures-Yin-Yang-icon.png" />
     <Content Include="Resources\Icons8-Windows-8-Cultures-Yin-Yang.ico" />
+    <Content Include="Resources\PC_Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

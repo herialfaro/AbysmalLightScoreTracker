@@ -12,12 +12,14 @@ namespace AbysmalLightScoreTracker
         public string Name;
         public string ID;
         public string Type;
+        public string CrossSaveOverride;
         List<string> characterIDs;
 
         Activity[][] StoryMissions = new Activity[3][];
         Activity[][] ForgeMissions = new Activity[3][];
         Activity[][] ReckoningMissions = new Activity[3][];
         Activity[][] StrikeMissions = new Activity[3][];
+        Activity[][] MenagerieMissions = new Activity[3][];
         Activity[][] NightfallMissions = new Activity[3][];
         Activity[][] CrucibleMatches = new Activity[3][];
         Activity[][] GambitMatches = new Activity[3][];
@@ -28,6 +30,7 @@ namespace AbysmalLightScoreTracker
         public Activity[][] GetForgeMissions { get => ForgeMissions; }
         public Activity[][] GetReckoningMissions { get => ReckoningMissions; }
         public Activity[][] GetStrikeMissions { get => StrikeMissions; }
+        public Activity[][] GetMenagerieMissions { get => MenagerieMissions; }
         public Activity[][] GetNightfallMissions { get => NightfallMissions; }
         public Activity[][] GetCrucibleMatches { get => CrucibleMatches; }
         public Activity[][] GetGambitMatches { get => GambitMatches; }
@@ -118,6 +121,54 @@ namespace AbysmalLightScoreTracker
             {
                 Member tempMember = new Member();
                 outPut = string.Empty;
+
+                while (!STOP)
+                {
+                    charParse[0] = (char)localreader.Read();
+                    if (charParse[0] == ']')
+                    {
+                        break;
+                    }
+                    if (charParse[0] == 'r')
+                    {
+                        charParse[1] = (char)localreader.Read();
+                        if (charParse[1] == 'r')
+                        {
+                            charParse[2] = (char)localreader.Read();
+                            if (charParse[2] == 'i')
+                            {
+                                charParse[3] = (char)localreader.Read();
+                                if (charParse[3] == 'd')
+                                {
+                                    charParse[4] = (char)localreader.Read();
+                                    if (charParse[4] == 'e')
+                                    {
+                                        STOP = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                STOP = false;
+                if (charParse[0] == ']')
+                {
+                    break;
+                }
+
+                localreader.Read();
+                localreader.Read();
+
+                charParse[0] = (char)localreader.Read();
+                tempMember.CrossSaveOverride = charParse[0].ToString();
+                localreader.Read();
+
+                while (charParse[0] != ']')
+                {
+                    charParse[0] = (char)localreader.Read();
+                }
+                ////////////////////////////////////////////////
+
                 while (!STOP)
                 {
                     charParse[0] = (char)localreader.Read();
