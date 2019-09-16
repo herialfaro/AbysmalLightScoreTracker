@@ -57,6 +57,12 @@ namespace AbysmalLightScoreTracker
             {
                 charParse = (char)reader.Read();
             }
+            charParse = ' ';
+
+            while (charParse != '[')
+            {
+                charParse = (char)reader.Read();
+            }
             reader.Read();
 
             while (charParse != ']')
@@ -88,7 +94,6 @@ namespace AbysmalLightScoreTracker
                 charParse = (char)reader.Read();
             }
         }
-
     }
 
     class ClanMemberParser
@@ -124,11 +129,12 @@ namespace AbysmalLightScoreTracker
 
                 while (!STOP)
                 {
-                    charParse[0] = (char)localreader.Read();
-                    if (charParse[0] == ']')
+                    if (charParse[0] == ']' || charParse[0] == 65535)
                     {
                         break;
                     }
+
+                    charParse[0] = (char)localreader.Read();
                     if (charParse[0] == 'r')
                     {
                         charParse[1] = (char)localreader.Read();
@@ -151,7 +157,7 @@ namespace AbysmalLightScoreTracker
                     }
                 }
                 STOP = false;
-                if (charParse[0] == ']')
+                if (charParse[0] == ']' || charParse[0] == 65535)
                 {
                     break;
                 }
