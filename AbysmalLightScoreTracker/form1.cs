@@ -73,12 +73,13 @@ namespace AbysmalLightScoreTracker
         private void ConvertDateTime()
         {
             Reset_time = DateTime.Now.Date;
+            Reset_time = Reset_time.ToUniversalTime();
             Reset_time = Reset_time.AddDays(-1);
 
             while (Reset_time.DayOfWeek != Date_selected)
             //while (Reset_time.DayOfWeek != DayOfWeek.Wednesday)
             { Reset_time = Reset_time.AddDays(-1); }
-            Reset_time = Reset_time.AddHours(18);
+            Reset_time = Reset_time.AddHours(13);
 
             Date_limit = Reset_time.AddDays(7);
 

@@ -71,7 +71,6 @@ C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\bin
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\bin\Release\Google.Apis.Sheets.v4.pdb
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\bin\Release\Google.Apis.Sheets.v4.xml
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\bin\Release\Newtonsoft.Json.xml
-C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.csprojAssemblyReference.cache
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.ALScoreTracker.resources
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.Properties.Resources.resources
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.csproj.GenerateResource.cache
