@@ -78,3 +78,4 @@ C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.csproj.CopyComplete
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.exe
 C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.pdb
+C:\Users\herib\Documents\Abysmal_Light_ScoreTracker\AbysmalLightScoreTracker\obj\Release\AbysmalLightScoreTracker.csprojAssemblyReference.cache

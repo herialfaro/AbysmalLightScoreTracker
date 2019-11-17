@@ -123,6 +123,13 @@ namespace SheetsQuickstart
                     StoryMissions += (ushort)Stories[i].Count();
             }
 
+            Stories = actual_member.GetDungeonMissions;
+            for (int i = 0; i < Stories.Count(); i++)
+            {
+                if (Stories[i] != null)
+                    StoryMissions += (ushort)Stories[i].Count();
+            }
+
             Activity[][] Strikes = actual_member.GetStrikeMissions;
             for (int i = 0; i < Strikes.Count(); i++)
             {
@@ -131,6 +138,13 @@ namespace SheetsQuickstart
             }
 
             Activity[][] Nightfalls = actual_member.GetNightfallMissions;
+            for (int i = 0; i < Nightfalls.Count(); i++)
+            {
+                if (Nightfalls[i] != null)
+                    NightfallMissions += (ushort)Nightfalls[i].Count();
+            }
+
+            Nightfalls = actual_member.GetNightmareHunts;
             for (int i = 0; i < Nightfalls.Count(); i++)
             {
                 if (Nightfalls[i] != null)
@@ -235,6 +249,7 @@ namespace SheetsQuickstart
             uint ReckoningTierII = 0;
             uint ReckoningTierIII = 0;
             uint ShatteredThronePoints = 0;
+            uint PitofHeresyPoints = 0;
             uint Points = 0;
 
             foreach (IList<object> element in values)
@@ -246,6 +261,10 @@ namespace SheetsQuickstart
                 else if (element[0].ToString() == "Shattered Throne")
                 {
                     uint.TryParse(element[1].ToString(), out ShatteredThronePoints);
+                }
+                else if (element[0].ToString() == "Pit of Heresy")
+                {
+                    uint.TryParse(element[1].ToString(), out PitofHeresyPoints);
                 }
                 else if (element[0].ToString() == "Reckoning tier 1")
                 {
@@ -274,6 +293,10 @@ namespace SheetsQuickstart
                                 {
                                     Points += 3*ShatteredThronePoints;
                                 }
+                                else if (Stories[i][j].ActivityDefinition == "Pit of Heresy")
+                                {
+                                    Points += 3 * PitofHeresyPoints;
+                                }
                                 else
                                 {
                                     Points += 3*PointsperMission;
@@ -284,6 +307,10 @@ namespace SheetsQuickstart
                                 if (Stories[i][j].ActivityDefinition == "The Shattered Throne")
                                 {
                                     Points += ShatteredThronePoints;
+                                }
+                                else if (Stories[i][j].ActivityDefinition == "Pit of Heresy")
+                                {
+                                    Points += PitofHeresyPoints;
                                 }
                                 else
                                 {
@@ -396,6 +423,14 @@ namespace SheetsQuickstart
         {
             Activity[][] Nightfalls = actual_member.GetNightfallMissions;
             uint PointsperMission = 0;
+            uint OrdealAdeptPoints = 0;
+            uint OrdealHeroPoints = 0;
+            uint OrdealLegendPoints = 0;
+            uint OrdealMasterPoints = 0;
+            uint HuntAdeptPoints = 0;
+            uint HuntHeroPoints = 0;
+            uint HuntLegendPoints = 0;
+            uint HuntMasterPoints = 0;
             uint Points = 0;
 
             foreach (IList<object> element in values)
@@ -403,6 +438,38 @@ namespace SheetsQuickstart
                 if (element[0].ToString() == "Ocaso")
                 {
                     uint.TryParse(element[1].ToString(), out PointsperMission);
+                }
+                else if (element[0].ToString() == "Ocaso Suplicio Adepto")
+                {
+                    uint.TryParse(element[1].ToString(), out OrdealAdeptPoints);
+                }
+                else if (element[0].ToString() == "Ocaso Suplicio Heroe")
+                {
+                    uint.TryParse(element[1].ToString(), out OrdealHeroPoints);
+                }
+                else if (element[0].ToString() == "Ocaso Suplicio Leyenda")
+                {
+                    uint.TryParse(element[1].ToString(), out OrdealLegendPoints);
+                }
+                else if (element[0].ToString() == "Ocaso Suplicio Maestro")
+                {
+                    uint.TryParse(element[1].ToString(), out OrdealMasterPoints);
+                }
+                else if (element[0].ToString() == "Pesadillas Adepto")
+                {
+                    uint.TryParse(element[1].ToString(), out HuntAdeptPoints);
+                }
+                else if (element[0].ToString() == "Pesadillas Heroe")
+                {
+                    uint.TryParse(element[1].ToString(), out HuntHeroPoints);
+                }
+                else if (element[0].ToString() == "Pesadillas Leyenda")
+                {
+                    uint.TryParse(element[1].ToString(), out HuntLegendPoints);
+                }
+                else if (element[0].ToString() == "Pesadillas Maestro")
+                {
+                    uint.TryParse(element[1].ToString(), out HuntMasterPoints);
                 }
             }
 
@@ -415,11 +482,137 @@ namespace SheetsQuickstart
                         {
                             if(Nightfalls[i][j].Compwclanmembers)
                             {
-                                Points += 3*PointsperMission;
+                                if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Adept")
+                                {
+                                    Points += 3 * OrdealAdeptPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Hero")
+                                {
+                                    Points += 3 * OrdealHeroPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Legend")
+                                {
+                                    Points += 3 * OrdealLegendPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Master")
+                                {
+                                    Points += 3 * OrdealMasterPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Adept")
+                                {
+                                    Points += 3 * HuntAdeptPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Hero")
+                                {
+                                    Points += 3 * HuntHeroPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Legend")
+                                {
+                                    Points += 3 * HuntLegendPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Master")
+                                {
+                                    Points += 3 * HuntMasterPoints;
+                                }
+                                else
+                                {
+                                    Points += 3 * PointsperMission;
+                                }
                             }
                             else
                             {
-                                Points += PointsperMission;
+                                if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Adept")
+                                {
+                                    Points += OrdealAdeptPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Hero")
+                                {
+                                    Points += OrdealHeroPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Legend")
+                                {
+                                    Points += OrdealLegendPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightfall: The Ordeal: Master")
+                                {
+                                    Points += OrdealMasterPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Adept" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Adept")
+                                {
+                                    Points += HuntAdeptPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Hero" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Hero")
+                                {
+                                    Points += HuntHeroPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Legend" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Legend")
+                                {
+                                    Points += HuntLegendPoints;
+                                }
+                                else if (Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Insanity: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Rage: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Servitude: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Pride: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Isolation: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Fear: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Anguish: Master" ||
+                                    Nightfalls[i][j].ActivityDefinition == "Nightmare Hunt: Despair: Master")
+                                {
+                                    Points += HuntMasterPoints;
+                                }
+                                else
+                                {
+                                    Points += PointsperMission;
+                                }
                             }
                         }
                     }
@@ -592,6 +785,8 @@ namespace SheetsQuickstart
             uint CrimsonLose = 0;
             uint BreakthroughWin = 0;
             uint BreakthroughLose = 0;
+            uint MomentumWin = 0;
+            uint MomentumLose = 0;
             uint ShowdownWin = 0;
             uint ShowdownLose = 0;
 
@@ -610,11 +805,11 @@ namespace SheetsQuickstart
 
             foreach (IList<object> element in values)
             {
-                if (element[0].ToString() == "Derrota quickplay")
+                if (element[0].ToString() == "Derrota otros")
                 {
                     uint.TryParse(element[1].ToString(), out OtherLose);
                 }
-                else if (element[0].ToString() == "Victoria quickplay")
+                else if (element[0].ToString() == "Victoria otros")
                 {
                     uint.TryParse(element[1].ToString(), out OtherWin);
                 }
@@ -665,6 +860,14 @@ namespace SheetsQuickstart
                 else if (element[0].ToString() == "Derrota Showdown")
                 {
                     uint.TryParse(element[1].ToString(), out ShowdownLose);
+                }
+                else if (element[0].ToString() == "Victoria Momentum")
+                {
+                    uint.TryParse(element[1].ToString(), out MomentumWin);
+                }
+                else if (element[0].ToString() == "Derrota Momentum")
+                {
+                    uint.TryParse(element[1].ToString(), out MomentumLose);
                 }
                 else if (element[0].ToString() == "30+ derrotados")
                 {
@@ -781,6 +984,17 @@ namespace SheetsQuickstart
                                     else if (Crucible[i][j].Standing == "Defeat")
                                     {
                                         Points += 3*MayhemLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Momentum Control")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3 * MomentumWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3 * MomentumLose;
                                     }
                                 }
                                 else
@@ -913,6 +1127,17 @@ namespace SheetsQuickstart
                                     else if (Crucible[i][j].Standing == "Defeat")
                                     {
                                         Points += MayhemLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Momentum Control")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += MomentumWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += MomentumLose;
                                     }
                                 }
                                 else

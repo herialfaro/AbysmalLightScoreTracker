@@ -18,9 +18,11 @@ namespace AbysmalLightScoreTracker
         Activity[][] StoryMissions = new Activity[3][];
         Activity[][] ForgeMissions = new Activity[3][];
         Activity[][] ReckoningMissions = new Activity[3][];
+        Activity[][] DungeonMissions = new Activity[3][];
         Activity[][] StrikeMissions = new Activity[3][];
         Activity[][] MenagerieMissions = new Activity[3][];
         Activity[][] NightfallMissions = new Activity[3][];
+        Activity[][] NightmareHunts = new Activity[3][];
         Activity[][] CrucibleMatches = new Activity[3][];
         Activity[][] GambitMatches = new Activity[3][];
         Activity[][] GambitPrimeMatches = new Activity[3][];
@@ -29,9 +31,11 @@ namespace AbysmalLightScoreTracker
         public Activity[][] GetStoryMissions { get => StoryMissions; }
         public Activity[][] GetForgeMissions { get => ForgeMissions; }
         public Activity[][] GetReckoningMissions { get => ReckoningMissions; }
+        public Activity[][] GetDungeonMissions { get => DungeonMissions; }
         public Activity[][] GetStrikeMissions { get => StrikeMissions; }
         public Activity[][] GetMenagerieMissions { get => MenagerieMissions; }
         public Activity[][] GetNightfallMissions { get => NightfallMissions; }
+        public Activity[][] GetNightmareHunts { get => NightmareHunts; }
         public Activity[][] GetCrucibleMatches { get => CrucibleMatches; }
         public Activity[][] GetGambitMatches { get => GambitMatches; }
         public Activity[][] GetGambitPrimeMatches { get => GambitPrimeMatches; }
