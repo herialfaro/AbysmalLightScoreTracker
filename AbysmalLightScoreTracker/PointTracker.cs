@@ -18,6 +18,7 @@ namespace SheetsQuickstart
 {
     class PointTracker
     {
+        UserCredential credential;
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
@@ -43,10 +44,8 @@ namespace SheetsQuickstart
         public uint GetGambitPoints() { return GambitPoints; }
         public uint GetTotalPoints() { return TotalPoints; }
 
-        public PointTracker(string sheetID, Member member)
+        public PointTracker(string pointsheetID, Member member)
         {
-            UserCredential credential;
-
             using (var stream =
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
@@ -70,13 +69,11 @@ namespace SheetsQuickstart
             });
 
             // Define request parameters.
-            String spreadsheetId = sheetID;
+            String spreadsheetId = pointsheetID;
             String range = "A2:B";
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     service.Spreadsheets.Values.Get(spreadsheetId, range);
 
-            // Prints the names and majors of students in a sample spreadsheet:
-            // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
             ValueRange response = request.Execute();
             values = response.Values;
             if (values != null && values.Count > 0)
@@ -629,6 +626,7 @@ namespace SheetsQuickstart
             uint LastWish = 0;
             uint ScourgeofthePast = 0;
             uint CrownofSorrow = 0;
+            uint GardenofSalvation = 0;
             uint MenagerieNormal = 0;
             uint MenagerieHeroic = 0;
 
@@ -655,6 +653,10 @@ namespace SheetsQuickstart
                 else if (element[0].ToString() == "Corona del Dolor")
                 {
                     uint.TryParse(element[1].ToString(), out CrownofSorrow);
+                }
+                else if (element[0].ToString() == "Jardin de la Salvacion")
+                {
+                    uint.TryParse(element[1].ToString(), out GardenofSalvation);
                 }
                 else if (element[0].ToString() == "Menagerie")
                 {
@@ -699,6 +701,10 @@ namespace SheetsQuickstart
                                 {
                                     Points += 3*CrownofSorrow;
                                 }
+                                else if (Raids[i][j].ActivityDefinition == "Garden of Salvation")
+                                {
+                                    Points += 3 * GardenofSalvation;
+                                }
                             }
                             else
                             {
@@ -725,6 +731,10 @@ namespace SheetsQuickstart
                                 else if (Raids[i][j].ActivityDefinition == "Crown of Sorrow: Normal")
                                 {
                                     Points += CrownofSorrow;
+                                }
+                                else if (Raids[i][j].ActivityDefinition == "Garden of Salvation")
+                                {
+                                    Points += GardenofSalvation;
                                 }
                             }
                         }
@@ -781,14 +791,16 @@ namespace SheetsQuickstart
 
             uint MayhemWin = 0;
             uint MayhemLose = 0;
-            uint CrimsonWin = 0;
-            uint CrimsonLose = 0;
+            uint DoublesWin = 0;
+            uint DoublesLose = 0;
             uint BreakthroughWin = 0;
             uint BreakthroughLose = 0;
             uint MomentumWin = 0;
             uint MomentumLose = 0;
             uint ShowdownWin = 0;
             uint ShowdownLose = 0;
+            uint ScorchedWin = 0;
+            uint ScorchedLose = 0;
 
             uint FortyPlusNormal = 0;
             uint FortyPlusSpecial = 0;
@@ -837,13 +849,13 @@ namespace SheetsQuickstart
                 {
                     uint.TryParse(element[1].ToString(), out MayhemLose);
                 }
-                else if (element[0].ToString() == "Victoria Carmesi")
+                else if (element[0].ToString() == "Victoria Doubles")
                 {
-                    uint.TryParse(element[1].ToString(), out CrimsonWin);
+                    uint.TryParse(element[1].ToString(), out DoublesWin);
                 }
-                else if (element[0].ToString() == "Derrota Carmesi")
+                else if (element[0].ToString() == "Derrota Doubles")
                 {
-                    uint.TryParse(element[1].ToString(), out CrimsonLose);
+                    uint.TryParse(element[1].ToString(), out DoublesLose);
                 }
                 else if (element[0].ToString() == "Victoria Breakthrough")
                 {
@@ -866,6 +878,14 @@ namespace SheetsQuickstart
                     uint.TryParse(element[1].ToString(), out MomentumWin);
                 }
                 else if (element[0].ToString() == "Derrota Momentum")
+                {
+                    uint.TryParse(element[1].ToString(), out MomentumLose);
+                }
+                else if (element[0].ToString() == "Victoria Scorched")
+                {
+                    uint.TryParse(element[1].ToString(), out MomentumWin);
+                }
+                else if (element[0].ToString() == "Derrota Scorched")
                 {
                     uint.TryParse(element[1].ToString(), out MomentumLose);
                 }
@@ -920,7 +940,8 @@ namespace SheetsQuickstart
                         {
                             if(Crucible[i][j].Compwclanmembers)
                             {
-                                if (Crucible[i][j].ActivityDefinition == "Competitive")
+                                if (Crucible[i][j].ActivityDefinition == "Survival" ||
+                                    Crucible[i][j].ActivityDefinition == "Survival: Freelance")
                                 {
                                     if (Crucible[i][j].Standing == "Victory")
                                     {
@@ -942,15 +963,27 @@ namespace SheetsQuickstart
                                         Points += 3*IronLose;
                                     }
                                 }
-                                else if (Crucible[i][j].ActivityDefinition == "Crimson Days")
+                                else if (Crucible[i][j].ActivityDefinition == "Team Scorched")
                                 {
                                     if (Crucible[i][j].Standing == "Victory")
                                     {
-                                        Points += 3*CrimsonWin;
+                                        Points += 3 * ScorchedWin;
                                     }
                                     else if (Crucible[i][j].Standing == "Defeat")
                                     {
-                                        Points += 3*CrimsonLose;
+                                        Points += 3 * ScorchedLose;
+                                    }
+                                }
+                                else if (Crucible[i][j].ActivityDefinition == "Crimson Days" ||
+                                    Crucible[i][j].ActivityDefinition == "Doubles")
+                                {
+                                    if (Crucible[i][j].Standing == "Victory")
+                                    {
+                                        Points += 3*DoublesWin;
+                                    }
+                                    else if (Crucible[i][j].Standing == "Defeat")
+                                    {
+                                        Points += 3*DoublesLose;
                                     }
                                 }
                                 else if (Crucible[i][j].ActivityDefinition == "Breakthrough")
@@ -1089,11 +1122,11 @@ namespace SheetsQuickstart
                                 {
                                     if (Crucible[i][j].Standing == "Victory")
                                     {
-                                        Points += CrimsonWin;
+                                        Points += DoublesWin;
                                     }
                                     else if (Crucible[i][j].Standing == "Defeat")
                                     {
-                                        Points += CrimsonLose;
+                                        Points += DoublesLose;
                                     }
                                 }
                                 else if (Crucible[i][j].ActivityDefinition == "Breakthrough")

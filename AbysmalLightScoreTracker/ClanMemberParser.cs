@@ -67,7 +67,15 @@ namespace AbysmalLightScoreTracker
             {
                 charParse = (char)reader.Read();
             }
-            reader.Read();
+            charParse = (char)reader.Read();
+            if(charParse != '"')
+            {
+                while (charParse != '[')
+                {
+                    charParse = (char)reader.Read();
+                }
+                reader.Read();
+            }
 
             while (charParse != ']')
             {
@@ -126,7 +134,7 @@ namespace AbysmalLightScoreTracker
                 charParse[0] = (char)localreader.Read();
             }
 
-            while(charParse[0] != ']')
+            while(charParse[0] != ']' && charParse[1] != ',')
             {
                 Member tempMember = new Member();
                 outPut = string.Empty;
@@ -177,6 +185,19 @@ namespace AbysmalLightScoreTracker
                 {
                     charParse[0] = (char)localreader.Read();
                 }
+
+                /* do
+                {
+                    charParse[0] = (char)localreader.Read();
+                } while (charParse[0] != ']');
+
+                if (charParse[0] != ',')
+                {
+                    while (charParse[0] != ']')
+                    {
+                        charParse[0] = (char)localreader.Read();
+                    }
+                }*/
                 ////////////////////////////////////////////////
 
                 while (!STOP)

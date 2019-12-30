@@ -20,11 +20,37 @@ namespace AbysmalLightScoreTracker
         RESTClient rClient;
 
         DestinyCharacter new_character;
+
         OtherPVE new_missionmanager;
+        OtherPVE new_forgemanager;
+        OtherPVE new_dungeonmanager;
+        OtherPVE new_reckoningmanager;
+        OtherPVE new_strikemanager;
+        OtherPVE new_nightfallmanager;
+        OtherPVE new_nightmarehuntmanager;
+
         RaidManager new_raidmanager;
+        RaidManager new_menageriemanager;
+
         CrucibleManager new_cruciblemanager;
+
         GambitManager new_gambitmanager;
+        GambitManager new_gambitprimemanager;
+
         ClanMemberParser new_clanmembermanager;
+
+        Activity[][] StoryMissions;
+        Activity[][] ForgeMissions;
+        Activity[][] ReckoningMissions;
+        Activity[][] DungeonMissions;
+        Activity[][] StrikeMissions;
+        Activity[][] NightfallMissions;
+        Activity[][] NightmareHunts;
+        Activity[][] Raids;
+        Activity[][] Menagerie;
+        Activity[][] CrucibleMatches;
+        Activity[][] GambitMatches;
+        Activity[][] GambitPrimeMatches;
 
         PointTracker myPointTracker;
         IList<IList<Object>> points;
@@ -45,6 +71,8 @@ namespace AbysmalLightScoreTracker
         public bool LastWeek;
 
         List<DestinyCharacter> characterList;
+
+        public List<string> IDs;
 
         public ALScoreTracker()
         {
@@ -199,7 +227,7 @@ namespace AbysmalLightScoreTracker
 
                     int i = 0;
                     List<string> IDs = actual_member.GetcharacterIDs();
-                    Activity[][] StoryMissions = actual_member.GetStoryMissions;
+                    StoryMissions = actual_member.GetStoryMissions;
                     foreach (string element in IDs)
                     {
                         new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
@@ -264,14 +292,14 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 66);
+                    new_forgemanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 66);
 
                     i = 0;
-                    Activity[][] ForgeMissions = actual_member.GetForgeMissions;
+                    ForgeMissions = actual_member.GetForgeMissions;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        ForgeMissions[i] = new_missionmanager.Activity_list;
+                        new_forgemanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        ForgeMissions[i] = new_forgemanager.Activity_list;
                         i++;
                     }
 
@@ -332,14 +360,14 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 76);
+                    new_reckoningmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 76);
 
                     i = 0;
-                    Activity[][] ReckoningMissions = actual_member.GetReckoningMissions;
+                    ReckoningMissions = actual_member.GetReckoningMissions;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        ReckoningMissions[i] = new_missionmanager.Activity_list;
+                        new_reckoningmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        ReckoningMissions[i] = new_reckoningmanager.Activity_list;
                         i++;
                     }
 
@@ -400,14 +428,14 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 82);
+                    new_dungeonmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 82);
 
                     i = 0;
-                    Activity[][] DungeonMissions = actual_member.GetDungeonMissions;
+                    DungeonMissions = actual_member.GetDungeonMissions;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        DungeonMissions[i] = new_missionmanager.Activity_list;
+                        new_dungeonmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        DungeonMissions[i] = new_dungeonmanager.Activity_list;
                         i++;
                     }
 
@@ -483,15 +511,15 @@ namespace AbysmalLightScoreTracker
                     StrikeView2.Items.Clear();
                     StrikeView3.Items.Clear();
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 3);
+                    new_strikemanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 3);
 
                     int i = 0;
                     List<string> IDs = actual_member.GetcharacterIDs();
-                    Activity[][] StrikeMissions = actual_member.GetStrikeMissions;
+                    StrikeMissions = actual_member.GetStrikeMissions;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        StrikeMissions[i] = new_missionmanager.Activity_list;
+                        new_strikemanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        StrikeMissions[i] = new_strikemanager.Activity_list;
                         i++;
                     }
 
@@ -567,15 +595,15 @@ namespace AbysmalLightScoreTracker
                     StrikeView2.Items.Clear();
                     StrikeView3.Items.Clear();
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 46);
+                    new_nightfallmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 46);
 
                     int i = 0;
                     List<string> IDs = actual_member.GetcharacterIDs();
-                    Activity[][] NightfallMissions = actual_member.GetNightfallMissions;
+                    NightfallMissions = actual_member.GetNightfallMissions;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        NightfallMissions[i] = new_missionmanager.Activity_list;
+                        new_nightfallmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        NightfallMissions[i] = new_nightfallmanager.Activity_list;
                         i++;
                     }
 
@@ -636,17 +664,17 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 79);
+                    new_nightmarehuntmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 79);
 
                     i = 0;
-                    Activity[][] NightmareHunts = actual_member.GetNightmareHunts;
+                    NightmareHunts = actual_member.GetNightmareHunts;
                     foreach (string element in IDs)
                     {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        NightmareHunts[i] = new_missionmanager.Activity_list;
+                        new_nightmarehuntmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                        NightmareHunts[i] = new_nightmarehuntmanager.Activity_list;
                         i++;
                     }
-                    
+
                     foreach (Activity element in NightmareHunts[0])
                     {
                         string[] arr = new string[8];
@@ -723,7 +751,7 @@ namespace AbysmalLightScoreTracker
 
                     int i = 0;
                     List<string> IDs = actual_member.GetcharacterIDs();
-                    Activity[][] Raids = actual_member.GetRaids;
+                    Raids = actual_member.GetRaids;
                     foreach (string element in IDs)
                     {
                         new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
@@ -788,14 +816,14 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_raidmanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
+                    new_menageriemanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
 
                     i = 0;
-                    Activity[][] Menagerie = actual_member.GetMenagerieMissions;
+                    Menagerie = actual_member.GetMenagerieMissions;
                     foreach (string element in IDs)
                     {
-                        new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
-                        Menagerie[i] = new_raidmanager.Activity_list;
+                        new_menageriemanager.ParseRaid(actual_member.ID, element, actual_member.Type);
+                        Menagerie[i] = new_menageriemanager.Activity_list;
                         i++;
                     }
 
@@ -874,7 +902,7 @@ namespace AbysmalLightScoreTracker
 
                     int i = 0;
                     List<string> IDs = actual_member.GetcharacterIDs();
-                    Activity[][] CrucibleMatches = actual_member.GetCrucibleMatches;
+                    CrucibleMatches = actual_member.GetCrucibleMatches;
                     foreach (string element in IDs)
                     {
                         new_cruciblemanager.ParseCrucible(actual_member.ID, element, actual_member.Type);
@@ -1053,14 +1081,14 @@ namespace AbysmalLightScoreTracker
                         }
                     }
 
-                    new_gambitmanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 75);
+                    new_gambitprimemanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 75);
 
                     i = 0;
                     Activity[][] GambitPrimeMatches = actual_member.GetGambitMatches;
                     foreach (string element in IDs)
                     {
-                        new_gambitmanager.ParseGambit(actual_member.ID, element, actual_member.Type);
-                        GambitPrimeMatches[i] = new_gambitmanager.Activity_list;
+                        new_gambitprimemanager.ParseGambit(actual_member.ID, element, actual_member.Type);
+                        GambitPrimeMatches[i] = new_gambitprimemanager.Activity_list;
                         i++;
                     }
 
@@ -1137,8 +1165,8 @@ namespace AbysmalLightScoreTracker
                 }
                 else if (STATE == "Puntaje semanal")
                 {
-                    List<string> IDs = actual_member.GetcharacterIDs();
-                    
+                    IDs = actual_member.GetcharacterIDs();
+
                     Points_Box.Visible = true;
                     General_box.Visible = false;
                     Mission_Box.Visible = false;
@@ -1147,133 +1175,72 @@ namespace AbysmalLightScoreTracker
                     Crucible_Box.Visible = false;
                     Gambit_Box.Visible = false;
 
-                    Activity[][] StoryMissions = actual_member.GetStoryMissions;
-                    Activity[][] ForgeMissions = actual_member.GetForgeMissions;
-                    Activity[][] ReckoningMissions = actual_member.GetReckoningMissions;
-                    Activity[][] DungeonMissions = actual_member.GetDungeonMissions;
-                    Activity[][] StrikeMissions = actual_member.GetStrikeMissions;
-                    Activity[][] NightfallMissions = actual_member.GetNightfallMissions;
-                    Activity[][] NightmareHunts = actual_member.GetNightmareHunts;
-                    Activity[][] Raids = actual_member.GetRaids;
-                    Activity[][] Menagerie = actual_member.GetMenagerieMissions;
-                    Activity[][] CrucibleMatches = actual_member.GetCrucibleMatches;
-                    Activity[][] GambitMatches = actual_member.GetGambitMatches;
-                    Activity[][] GambitPrimeMatches = actual_member.GetGambitPrimeMatches;
+                     StoryMissions = actual_member.GetStoryMissions;
+                     ForgeMissions = actual_member.GetForgeMissions;
+                     ReckoningMissions = actual_member.GetReckoningMissions;
+                     DungeonMissions = actual_member.GetDungeonMissions;
+                     StrikeMissions = actual_member.GetStrikeMissions;
+                     NightfallMissions = actual_member.GetNightfallMissions;
+                     NightmareHunts = actual_member.GetNightmareHunts;
+                     Raids = actual_member.GetRaids;
+                     Menagerie = actual_member.GetMenagerieMissions;
+                     CrucibleMatches = actual_member.GetCrucibleMatches;
+                     GambitMatches = actual_member.GetGambitMatches;
+                     GambitPrimeMatches = actual_member.GetGambitPrimeMatches;
 
+                    //StoriesFunc();
+                    //ForgesFunc();
+                    //ReckoningFunc();
+                    //DungeonsFunc();
+                    //StrikesFunc();
+                    //NightfallsFunc();
+                    //NightmareHuntsFunc();
+                    //RaidsFunc();
+                    //MenagerieFunc();
+                    //CrucibleFunc();
+                    //GambitFunc();
+                    //GambitPrimeFunc();
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 2);
-                    int i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        StoryMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
+                    var storiesthread = new Thread(StoriesFunc);
+                    var forgesthread = new Thread(ForgesFunc);
+                    var reckoningthread = new Thread(ReckoningFunc);
+                    var dungeonsthread = new Thread(DungeonsFunc);
+                    var strikestrhead = new Thread(StrikesFunc);
+                    var nightfallsthread = new Thread(NightfallsFunc);
+                    var nightmarehuntsthread = new Thread(NightmareHuntsFunc);
+                    var raidsthread = new Thread(RaidsFunc);
+                    var menageriethread = new Thread(MenagerieFunc);
+                    var cruciblethread = new Thread(CrucibleFunc);
+                    var gambitthread = new Thread(GambitFunc);
+                    var gambitprimethread = new Thread(GambitPrimeFunc);
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 66);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        ForgeMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
+                    cruciblethread.Start();
+                    storiesthread.Start();
+                    forgesthread.Start();
+                    reckoningthread.Start();
+                    dungeonsthread.Start();
+                    strikestrhead.Start();
+                    nightfallsthread.Start();
+                    nightmarehuntsthread.Start();
+                    raidsthread.Start();
+                    menageriethread.Start();
+                    gambitthread.Start();
+                    gambitprimethread.Start();
 
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 76);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        ReckoningMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 82);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        DungeonMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 3);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        StrikeMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 46);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        NightfallMissions[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 79);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
-                        NightmareHunts[i] = new_missionmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_raidmanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 4);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
-                        Raids[i] = new_raidmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_raidmanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
-                        Menagerie[i] = new_raidmanager.Activity_list;
-                        i++;
-                    }
-                    
-                    new_cruciblemanager = new CrucibleManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 5);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_cruciblemanager.ParseCrucible(actual_member.ID, element, actual_member.Type);
-                        CrucibleMatches[i] = new_cruciblemanager.Activity_list;
-                        i++;
-                    }
-
-                    new_gambitmanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 63);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_gambitmanager.ParseGambit(actual_member.ID, element, actual_member.Type);
-                        GambitMatches[i] = new_gambitmanager.Activity_list;
-                        i++;
-                    }
-
-                    new_gambitmanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 75);
-                    i = 0;
-                    foreach (string element in IDs)
-                    {
-                        new_gambitmanager.ParseGambit(actual_member.ID, element, actual_member.Type);
-                        GambitPrimeMatches[i] = new_gambitmanager.Activity_list;
-                        i++;
-                    }
+                    while (gambitprimethread.IsAlive || gambitthread.IsAlive
+                        || cruciblethread.IsAlive || menageriethread.IsAlive
+                        || raidsthread.IsAlive || nightmarehuntsthread.IsAlive
+                        || nightfallsthread.IsAlive || strikestrhead.IsAlive
+                        || dungeonsthread.IsAlive || reckoningthread.IsAlive
+                        || forgesthread.IsAlive || storiesthread.IsAlive)
+                    { }
 
                     myPointTracker = new PointTracker("1rQB4k2qpspgZpDz6dgxgpRl8kt9cGZd3kW3sRSxAdvc", actual_member);
                     myPointTracker.CalculateTotalPoints();
 
                     ActivitiesBox.Text = myPointTracker.GetNumofActivities().ToString();
-                    trackBar1.Value = myPointTracker.GetActivityLevel();
+                    ushort ActivityLevel = myPointTracker.GetActivityLevel();
+                    trackBar1.Value = ActivityLevel;
                     ModifyProgressBarColor.SetState(progressBar1, myPointTracker.GetStoplightColor());
 
                     StoryBox.Text = myPointTracker.GetStoryPoints().ToString();
@@ -1282,7 +1249,8 @@ namespace AbysmalLightScoreTracker
                     CrucibleBox.Text = myPointTracker.GetCruciblePoints().ToString();
                     GambitBox.Text = myPointTracker.GetGambitPoints().ToString();
                     RaidBox.Text = myPointTracker.GetRaidPoints().ToString();
-                    TotalBox.Text = myPointTracker.GetTotalPoints().ToString();
+                    uint TotalPoints = myPointTracker.GetTotalPoints();
+                    TotalBox.Text = TotalPoints.ToString();
 
                     points = myPointTracker.GetValues();
                     PointsView1.Items.Clear();
@@ -1308,6 +1276,150 @@ namespace AbysmalLightScoreTracker
             else
             {
                 Debug_box.Text = "Usuario invalido";
+            }
+        }
+
+        private void StoriesFunc()
+        {
+            new_missionmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 2);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_missionmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                StoryMissions[i] = new_missionmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void ForgesFunc()
+        {
+            new_forgemanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 66);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_forgemanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                ForgeMissions[i] = new_forgemanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void ReckoningFunc()
+        {
+            new_reckoningmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 76);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_reckoningmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                ReckoningMissions[i] = new_reckoningmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void DungeonsFunc()
+        {
+            new_dungeonmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 82);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_dungeonmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                DungeonMissions[i] = new_dungeonmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void StrikesFunc()
+        {
+            new_strikemanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 3);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_strikemanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                StrikeMissions[i] = new_strikemanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void NightfallsFunc()
+        {
+            new_nightfallmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 46);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_nightfallmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                NightfallMissions[i] = new_nightfallmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void NightmareHuntsFunc()
+        {
+            new_nightmarehuntmanager = new OtherPVE(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 79);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_nightmarehuntmanager.ParseOther(actual_member.ID, element, actual_member.Type);
+                NightmareHunts[i] = new_nightmarehuntmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void RaidsFunc()
+        {
+            new_raidmanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 4);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_raidmanager.ParseRaid(actual_member.ID, element, actual_member.Type);
+                Raids[i] = new_raidmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void MenagerieFunc()
+        {
+            new_menageriemanager = new RaidManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 77);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_menageriemanager.ParseRaid(actual_member.ID, element, actual_member.Type);
+                Menagerie[i] = new_menageriemanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void CrucibleFunc()
+        {
+            new_cruciblemanager = new CrucibleManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 5);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_cruciblemanager.ParseCrucible(actual_member.ID, element, actual_member.Type);
+                CrucibleMatches[i] = new_cruciblemanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void GambitFunc()
+        {
+            new_gambitmanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 63);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_gambitmanager.ParseGambit(actual_member.ID, element, actual_member.Type);
+                GambitMatches[i] = new_gambitmanager.Activity_list;
+                i++;
+            }
+        }
+
+        private void GambitPrimeFunc()
+        {
+            new_gambitprimemanager = new GambitManager(rClient, Reset_time, Date_limit, new_clanmembermanager.ClanMembersList, actual_member.ID, 75);
+            int i = 0;
+            foreach (string element in IDs)
+            {
+                new_gambitprimemanager.ParseGambit(actual_member.ID, element, actual_member.Type);
+                GambitPrimeMatches[i] = new_gambitprimemanager.Activity_list;
+                i++;
             }
         }
 

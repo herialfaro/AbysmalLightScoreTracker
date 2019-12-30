@@ -297,7 +297,8 @@
             "Ocasos",
             "Incursiones",
             "Crisol",
-            "Gambito"});
+            "Gambito",
+            "Semáforo mensual"});
             this.modeSelection.Location = new System.Drawing.Point(25, 78);
             this.modeSelection.Name = "modeSelection";
             this.modeSelection.Size = new System.Drawing.Size(121, 21);
@@ -450,6 +451,7 @@
             this.columnHeader21,
             this.columnHeader22,
             this.columnHeader23});
+            this.MissionView3.HideSelection = false;
             this.MissionView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
             this.MissionView3.Location = new System.Drawing.Point(20, 243);
@@ -513,6 +515,7 @@
             this.columnHeader13,
             this.columnHeader14,
             this.columnHeader15});
+            this.MissionView2.HideSelection = false;
             this.MissionView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem2});
             this.MissionView2.Location = new System.Drawing.Point(20, 130);
@@ -576,6 +579,7 @@
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader43});
+            this.MissionView1.HideSelection = false;
             this.MissionView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem3});
             this.MissionView1.Location = new System.Drawing.Point(20, 19);
@@ -650,6 +654,7 @@
             this.columnHeader46,
             this.columnHeader47,
             this.columnHeader48});
+            this.StrikeView3.HideSelection = false;
             this.StrikeView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem4});
             this.StrikeView3.Location = new System.Drawing.Point(12, 243);
@@ -713,6 +718,7 @@
             this.columnHeader30,
             this.columnHeader31,
             this.columnHeader32});
+            this.StrikeView2.HideSelection = false;
             this.StrikeView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem5});
             this.StrikeView2.Location = new System.Drawing.Point(12, 130);
@@ -776,6 +782,7 @@
             this.columnHeader41,
             this.columnHeader42,
             this.columnHeader24});
+            this.StrikeView1.HideSelection = false;
             this.StrikeView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem6});
             this.StrikeView1.Location = new System.Drawing.Point(12, 19);
@@ -850,6 +857,7 @@
             this.columnHeader54,
             this.columnHeader55,
             this.columnHeader56});
+            this.RaidView3.HideSelection = false;
             this.RaidView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem7});
             this.RaidView3.Location = new System.Drawing.Point(12, 243);
@@ -913,6 +921,7 @@
             this.columnHeader62,
             this.columnHeader63,
             this.columnHeader64});
+            this.RaidView2.HideSelection = false;
             this.RaidView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem8});
             this.RaidView2.Location = new System.Drawing.Point(12, 130);
@@ -976,6 +985,7 @@
             this.columnHeader70,
             this.columnHeader71,
             this.columnHeader72});
+            this.RaidView1.HideSelection = false;
             this.RaidView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem9});
             this.RaidView1.Location = new System.Drawing.Point(12, 19);
@@ -1067,6 +1077,7 @@
             this.columnHeader112,
             this.columnHeader113,
             this.columnHeader114});
+            this.PVPView3.HideSelection = false;
             this.PVPView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem10});
             this.PVPView3.Location = new System.Drawing.Point(12, 243);
@@ -1162,6 +1173,7 @@
             this.columnHeader98,
             this.columnHeader99,
             this.columnHeader100});
+            this.PVPView2.HideSelection = false;
             this.PVPView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem11});
             this.PVPView2.Location = new System.Drawing.Point(12, 130);
@@ -1257,6 +1269,7 @@
             this.columnHeader94,
             this.columnHeader95,
             this.columnHeader96});
+            this.PVPView1.HideSelection = false;
             this.PVPView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem12});
             this.PVPView1.Location = new System.Drawing.Point(12, 19);
@@ -1361,6 +1374,7 @@
             this.columnHeader138,
             this.columnHeader139,
             this.columnHeader140});
+            this.GambitView3.HideSelection = false;
             this.GambitView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem13});
             this.GambitView3.Location = new System.Drawing.Point(16, 250);
@@ -1448,6 +1462,7 @@
             this.columnHeader125,
             this.columnHeader126,
             this.columnHeader127});
+            this.GambitView2.HideSelection = false;
             this.GambitView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem14});
             this.GambitView2.Location = new System.Drawing.Point(16, 136);
@@ -1535,6 +1550,7 @@
             this.columnHeader154,
             this.columnHeader155,
             this.columnHeader156});
+            this.GambitView1.HideSelection = false;
             this.GambitView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem15});
             this.GambitView1.Location = new System.Drawing.Point(16, 23);
@@ -1863,6 +1879,7 @@
             this.PointsView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader175,
             this.columnHeader176});
+            this.PointsView1.HideSelection = false;
             this.PointsView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem16});
             this.PointsView1.Location = new System.Drawing.Point(327, 26);

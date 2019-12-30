@@ -771,6 +771,7 @@ namespace AbysmalLightScoreTracker
             string strDef = rClient.makeRequest();
             StringReader Defreader = new StringReader(strDef);
             bool DefSTOP = false; char[] DefParse = new char[5];
+            bool ErrorCode = false;
             string DefoutPut = string.Empty;
 
             while (!DefSTOP)
@@ -791,6 +792,23 @@ namespace AbysmalLightScoreTracker
                                 if (DefParse[4] == 's')
                                 {
                                     DefSTOP = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (DefParse[1] == 'C')
+                    {
+                        DefParse[2] = (char)Defreader.Read();
+                        if (DefParse[2] == 'o')
+                        {
+                            DefParse[3] = (char)Defreader.Read();
+                            if (DefParse[3] == 'd')
+                            {
+                                DefParse[4] = (char)Defreader.Read();
+                                if (DefParse[4] == 'e')
+                                {
+                                    DefSTOP = true;
+                                    ErrorCode = true;
                                 }
                             }
                         }
@@ -827,20 +845,28 @@ namespace AbysmalLightScoreTracker
                     break;
                 }
             }
-            DefSTOP = false; Defreader.Read(); Defreader.Read();
 
-            if (DefParse[0] != 65535)
+            if(ErrorCode == false)
             {
-                while (DefParse[0] != '"')
+                DefSTOP = false; Defreader.Read(); Defreader.Read();
+
+                if (DefParse[0] != 65535)
                 {
-                    DefParse[0] = (char)Defreader.Read();
-                    if (DefParse[0] == '"')
+                    while (DefParse[0] != '"')
                     {
-                        break;
+                        DefParse[0] = (char)Defreader.Read();
+                        if (DefParse[0] == '"')
+                        {
+                            break;
+                        }
+                        DefoutPut += DefParse[0];
                     }
-                    DefoutPut += DefParse[0];
+                    Mission.ActivityDefinition = DefoutPut;
                 }
-                Mission.ActivityDefinition = DefoutPut;
+            }
+            else
+            {
+                Mission.ActivityDefinition = "";
             }
         }
     }
