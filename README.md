@@ -9,6 +9,9 @@ https://bungie-net.github.io/multi/index.html
 Official repository of Bungie for the API: 
 https://github.com/Bungie-net/api
 
+Video demonstration: https://youtu.be/DwJa0gj5fz0
+(Please read video description)
+
 # What I learned
 
 ° Build Windows Forms that are able to connect to third-party APIs (like Google docs and Bungie.net)
