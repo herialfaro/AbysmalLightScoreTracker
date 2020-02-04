@@ -1,9 +1,13 @@
 # AbysmalLightScoreTracker
 
 A Windows Forms program that connects to the Bungie.net API
-and calculates points based on activities played in the game Destiny 2.
+and calculates points based on the number of weekly activities
+of a Destiny 2 player.
 
 https://bungie-net.github.io/multi/index.html
+
+Official repository of Bungie for the API: 
+https://github.com/Bungie-net/api
 
 # What I learned
 
