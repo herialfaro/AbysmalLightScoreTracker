@@ -6,7 +6,7 @@ of a Destiny 2 player.
 
 https://bungie-net.github.io/multi/index.html
 
-Official repository of Bungie for the API: 
+Official repository for the Bungie API: 
 https://github.com/Bungie-net/api
 
 Video demonstration: https://youtu.be/lSl0Oc0Bb_0
